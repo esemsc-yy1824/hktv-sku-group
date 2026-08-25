@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to hktv-sku-group 👋</h1>
+<h1>HKTV: Putting the same product into one group</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
   <img alt="Python" src="https://img.shields.io/badge/python-%3E%3D3.9-blue.svg" />
@@ -13,11 +13,7 @@
 
 > Group the SKUs listed by many merchants into real products, assigning every SKU a stable `group_id` and a human-readable `group_name`.
 
-Brand, product form, variant, unit size and origin together define product identity — **pack count does not**. A 3-pack and a 6-pack of the same soap are one product.
-
-Five methods are implemented and measured against the same evaluation harness. The recommended one, `method_5_hybrid_fusion`, reaches **69.4% silver-standard recall at 89.3% sample precision**, with 2.48% wrong merges and 100% pack invariance across 1,472 SKUs.
-
-### 🏠 [Homepage](https://github.com/esemsc-yy1824/hktv-sku-group)
+> Brand, product form, variant, unit size and origin together define product identity **(pack count does not)**.
 
 ## Prerequisites
 
@@ -79,15 +75,14 @@ python3 -m prediction.regression_checks # 7 adversarial checks
 
 Item-for-item consistent with `output/metrics.csv`:
 
-| Method | Recall | Wrong merges | Precision | Pack invariance | Adversarial | Gate | Time | Tokens |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| `method_1_lexical` | 54.9% | 2.5% | 86.9% | 98.8% | 7/7 | Pass | 8.9s | 0 |
-| `method_2_local_tfidf` | 54.9% | 2.2% | 88.3% | **100.0%** | 7/7 | Pass | 10.7s | 0 |
-| `method_3_semantic` | 57.5% | 2.3% | 88.1% | 98.8% | 7/7 | Pass | 10.3s | 310,737 |
-| `method_4_semantic_image` | 62.7% | 2.3% | 89.0% | 98.8% | 7/7 | Pass | 11.1s | 310,737 |
-| **`method_5_hybrid_fusion`** | **69.4%** | 2.5% | **89.3%** | **100.0%** | 7/7 | Pass | 12.4s | 310,737 |
+| Method                               |          Recall | Wrong merges |       Precision |  Pack invariance | Adversarial | Gate |  Time |  Tokens |
+| ------------------------------------ | --------------: | -----------: | --------------: | ---------------: | ----------: | ---: | ----: | ------: |
+| `method_1_lexical`                 |           54.9% |         2.5% |           86.9% |            98.8% |         7/7 | Pass |  8.9s |       0 |
+| `method_2_local_tfidf`             |           54.9% |         2.2% |           88.3% | **100.0%** |         7/7 | Pass | 10.7s |       0 |
+| `method_3_semantic`                |           57.5% |         2.3% |           88.1% |            98.8% |         7/7 | Pass | 10.3s | 310,737 |
+| `method_4_semantic_image`          |           62.7% |         2.3% |           89.0% |            98.8% |         7/7 | Pass | 11.1s | 310,737 |
+| **`method_5_hybrid_fusion`** | **69.4%** |         2.5% | **89.3%** | **100.0%** |         7/7 | Pass | 12.4s | 310,737 |
 
-Every number uses the **honest track**, which disables exact-EAN retrieval and must-link. Without that, the silver standard would be defined by barcode and then scored using the same barcode — a circular argument.
 
 ## ⚙️ How it works
 
@@ -95,13 +90,13 @@ All five methods run the same three-step pipeline. The only thing that changes i
 
 **Step 1 — Shortlist.** Comparing all 1.08 million pairs is slow and error-prone, so five recall channels run in parallel and a hit on any one admits the pair:
 
-| Channel | How it decides |
-|---|---|
-| Same barcode | Identical EAN-13, the strongest evidence available |
-| Brand + unit size | Same brand at the same weight |
-| Cleaned title | Identical string once pack and size markers are stripped |
-| Vector top-k | The 20 nearest neighbours in the method's representation |
-| Legacy blocking | Manufacturer identity, size value and unit all equal |
+| Channel           | How it decides                                           |
+| ----------------- | -------------------------------------------------------- |
+| Same barcode      | Identical EAN-13, the strongest evidence available       |
+| Brand + unit size | Same brand at the same weight                            |
+| Cleaned title     | Identical string once pack and size markers are stripped |
+| Vector top-k      | The 20 nearest neighbours in the method's representation |
+| Legacy blocking   | Manufacturer identity, size value and unit all equal     |
 
 Running five in parallel fixes the classic single-filter failure: one blank or mistyped field — origin, say — would otherwise strand a listing so it never pairs with anything.
 
@@ -121,12 +116,12 @@ Across 1,472 rows this took 139 duplicated names down to 0, with 6 reaching the 
 
 ## 🔬 The five methods
 
-| Method | Representation | Network |
-|---|---|---|
-| `method_1_lexical` | Lexical features only, no vectors | No |
-| `method_2_local_tfidf` | Local hashed character/word TF-IDF | No |
-| `method_3_semantic` | OpenAI `text-embedding-3-small`, 256d | Yes (`--offline` available) |
-| `method_4_semantic_image` | The above + primary product image | Yes (`--offline` available) |
+| Method                               | Representation                               | Network                       |
+| ------------------------------------ | -------------------------------------------- | ----------------------------- |
+| `method_1_lexical`                 | Lexical features only, no vectors            | No                            |
+| `method_2_local_tfidf`             | Local hashed character/word TF-IDF           | No                            |
+| `method_3_semantic`                | OpenAI`text-embedding-3-small`, 256d       | Yes (`--offline` available) |
+| `method_4_semantic_image`          | The above + primary product image            | Yes (`--offline` available) |
 | **`method_5_hybrid_fusion`** | Semantic + local TF-IDF + image, late fusion | Yes (`--offline` available) |
 
 ### Choosing the operating point
@@ -135,26 +130,16 @@ The threshold is **selected automatically** by the release gate (`multipass.choo
 
 Method 5 was once pinned by hand at the more conservative 0.98 (recall 61.7%, wrong merges 1.24%, precision 93.7%); a business decision returned it to automatic selection. The trade-off is 8 versus 16 wrong-merge events against +7.7pp recall. It can be re-pinned at any time in `paths.FIXED_OPERATING_POINTS`.
 
-### Why method 4 uses images, and what it does *not* assume
-
-Method 4 uses the primary product image as extra evidence. It explicitly **does not assume "more similar image, more likely same product"** — measurement says the opposite. The silver-standard negative pairs are same-brand, same-size products differing only in fragrance, sharing one packaging design, and structural similarity scores an AUC of just **0.419**, worse than random.
-
-What actually helps is near-duplicate detection: different merchants reusing the same manufacturer photo. When the dhash matches exactly, 13.0% of positives are hit with **0 false positives** across 645 negatives. The three image features are handed to the GBDT to weigh for itself.
-
-### Why method 5 fuses late
-
-Method 5 targets method 4's bottleneck — the candidate was recalled, but the pairwise decision still split it — without adding an expensive new model. It keeps two independent scores inside the same GBDT: semantic cosine aligns different spellings, while local TF-IDF cosine preserves rare surface tokens such as fragrance, model number and short codes. Both are late-fused with the three image features. The newly added local cosine takes 16.4% of the model's gain importance.
-
 ## 🚩 Optional flags
 
 The defaults *are* the current configuration; passing a flag is what changes behaviour.
 
-| Flag | Default | Effect |
-|---|---|---|
-| `--offline` | Off | Use the embedding and image caches only, never the API |
-| `--no-form` | Off (form enabled) | Disable `product_form` |
-| `--ann` | Off (exact retrieval) | Replace exact top-k with IVF approximate nearest neighbours |
-| `--llm-extract` | Off (regex only) | LLM structured extraction overrides the regexes (methods 3/4/5 only) |
+| Flag              | Default               | Effect                                                               |
+| ----------------- | --------------------- | -------------------------------------------------------------------- |
+| `--offline`     | Off                   | Use the embedding and image caches only, never the API               |
+| `--no-form`     | Off (form enabled)    | Disable`product_form`                                              |
+| `--ann`         | Off (exact retrieval) | Replace exact top-k with IVF approximate nearest neighbours          |
+| `--llm-extract` | Off (regex only)      | LLM structured extraction overrides the regexes (methods 3/4/5 only) |
 
 ### `--llm-extract`
 
@@ -170,19 +155,17 @@ Deliverable-level errors were eliminated: groups mixing laurel-oil percentages 9
 
 Silver negatives are built from an attribute snapshot taken *before* the override, so both extraction modes are compared on the same denominator. Cold start costs about 1.39M tokens; behind the content-addressed cache, `--offline` reproduces it.
 
-> ⚠️ **Before re-running `--llm-extract`:** it exposed 6 mislabelled pairs inside the frozen pack-invariance test set (20% and 30% laurel oil treated as different pack counts of the same product — what the number-stripping bug left behind when the labels were generated). Against the original denominator of 85 pairs, "after" scores only 92.9%; with those 6 removed (79 pairs), before and after are both 100%. **The frozen file and the production artefacts are unchanged** — correcting the test set changes the release measurement basis and needs explicit approval. Until then, those 6 pairs make every method fail the pack-invariance gate and automatic selection degrades with it, picking absurd thresholds like 0.50. Pin the operating point temporarily in `paths.FIXED_OPERATING_POINTS` for comparison experiments.
-
 ### `--no-form`
 
 The impact **varies by method**; it is not a uniform cost:
 
-| Method | Completeness | Adversarial | Gate |
-|---|---|---|---|
-| `method_1_lexical` | 54.9% → **63.2%** | 7/7 | Pass |
-| `method_2_local_tfidf` | 54.9% → 57.0% | 7/7 | Pass |
-| `method_3_semantic` | 57.5% → 62.7% | **7/7 → 4/7** | **Fail** |
-| `method_4_semantic_image` | 62.7% → **65.8%** | 7/7 | Pass |
-| `method_5_hybrid_fusion` | 61.7% → **55.4%** | 7/7 | Pass |
+| Method                      | Completeness            | Adversarial          | Gate           |
+| --------------------------- | ----------------------- | -------------------- | -------------- |
+| `method_1_lexical`        | 54.9% →**63.2%** | 7/7                  | Pass           |
+| `method_2_local_tfidf`    | 54.9% → 57.0%          | 7/7                  | Pass           |
+| `method_3_semantic`       | 57.5% → 62.7%          | **7/7 → 4/7** | **Fail** |
+| `method_4_semantic_image` | 62.7% →**65.8%** | 7/7                  | Pass           |
+| `method_5_hybrid_fusion`  | 61.7% →**55.4%** | 7/7                  | Pass           |
 
 Four methods gain completeness once form is disabled — form is a hard veto, and a misfire keeps genuinely identical products apart. But `method_3_semantic` drops to 4/7 adversarial: what form was blocking is precisely those 3 manually verified errors. So "form is an unmaintainable hand-written dictionary" does not mean "just remove it"; the right path is to replace it with a learned classifier. (Measured while method 5 was pinned at 0.98; the conclusion is independent of the operating point.)
 
@@ -194,32 +177,30 @@ The flag state of every run is recorded under the `config` key of `report.json`.
 
 ## 📏 How results are measured
 
-| Instrument | What it is | Size |
-|---|---|---|
-| Silver standard | Positive pairs derived from identical barcodes | 193 pairs |
-| Silver negatives | Same-brand, same-size pairs differing by variant | 645 pairs |
-| Pack invariance | Frozen pairs that differ only in pack count | 85 pairs |
-| Adversarial checks | Hand-verified cases that must not regress | 7 checks |
+| Instrument         | What it is                                       | Size      |
+| ------------------ | ------------------------------------------------ | --------- |
+| Silver standard    | Positive pairs derived from identical barcodes   | 193 pairs |
+| Silver negatives   | Same-brand, same-size pairs differing by variant | 645 pairs |
+| Pack invariance    | Frozen pairs that differ only in pack count      | 85 pairs  |
+| Adversarial checks | Hand-verified cases that must not regress        | 7 checks  |
 
 **The pack-invariance test set is frozen** into `data/labels/pack_invariance_pairs.csv` during preprocessing; evaluation reads the file and never recomputes it. The reason is worth stating: the pairs are drawn by bucketing on variant signatures, so the denominator derives from the variant vocabulary. Any change that shrinks the vocabulary shrinks the denominator with it, kicks the newly failing pairs out of the test set, and the metric prints 100% regardless. We watched it happen — one change to `min_brand_count` and the denominator quietly went from 85 to 84. Frozen, any change is an explicit file change, visible in `git diff`.
 
 **Release rule:** wrong merges on silver negatives `<= 2.5%`, pack invariance `>= 98%`, and all seven adversarial checks passing. Within 2pp of the best honest silver recall, prefer the method with higher sample precision.
 
-> The silver standard and case-control numbers are **diagnostic metrics, not a human gold standard**. The silver standard covers only the 18.5% of SKUs carrying a usable barcode, which biases it toward well-maintained listings. Turning these into a real correctness figure requires hand-labelling roughly 100 groups.
-
 ## 📦 Outputs
 
-| Path | Contents |
-|---|---|
-| `output/soap_sku_data_<method>.xlsx` | The original ten columns untouched, plus `group_id` and `group_name` |
-| `output/metrics.csv` | Unified metrics for every method, ratios rounded to 4dp |
-| `output/debug/metrics.json` | The same metrics at full precision |
-| `output/debug/<method>/groups.csv` | Stable `group_id` / `group_name` per SKU |
-| `output/debug/<method>/report.json` | Threshold curve, honest diagnostics, data hashes, flag state |
-| `output/debug/<method>/model.json` | The complete GBDT, reloadable |
-| `output/debug/<method>/candidate_pairs.csv` | Candidate source and model score, for debugging |
-| `output/debug/<method>/group_lineage.csv` | How this run's group IDs inherit from the previous result |
-| `output/experiments/` | Artefacts from non-default flags — never overwrites the deliverables |
+| Path                                          | Contents                                                                |
+| --------------------------------------------- | ----------------------------------------------------------------------- |
+| `output/soap_sku_data_<method>.xlsx`        | The original ten columns untouched, plus`group_id` and `group_name` |
+| `output/metrics.csv`                        | Unified metrics for every method, ratios rounded to 4dp                 |
+| `output/debug/metrics.json`                 | The same metrics at full precision                                      |
+| `output/debug/<method>/groups.csv`          | Stable`group_id` / `group_name` per SKU                             |
+| `output/debug/<method>/report.json`         | Threshold curve, honest diagnostics, data hashes, flag state            |
+| `output/debug/<method>/model.json`          | The complete GBDT, reloadable                                           |
+| `output/debug/<method>/candidate_pairs.csv` | Candidate source and model score, for debugging                         |
+| `output/debug/<method>/group_lineage.csv`   | How this run's group IDs inherit from the previous result               |
+| `output/experiments/`                       | Artefacts from non-default flags — never overwrites the deliverables   |
 
 All five methods write `report.json` under one shared set of key names, and `evaluate_all` reads only those structured fields.
 
@@ -227,12 +208,12 @@ All five methods write `report.json` under one shared set of key names, and `eva
 
 The deck in `slides/` is generated from committed artefacts. Everything it reports comes from the pipeline itself — no document in `docs/` is required:
 
-| Deck content | Produced by |
-|---|---|
-| Five-method comparison table | `output/metrics.csv`, via `run_method_*` then `evaluate_all` |
-| LLM before/after table | The same entry points with `--llm-extract`, landing in `output/experiments/*__llm/` |
-| Threshold curve | The `threshold_curve` key of each `output/debug/<method>/report.json` |
-| Adversarial 7/7 | `python3 -m prediction.regression_checks` |
+| Deck content                 | Produced by                                                                            |
+| ---------------------------- | -------------------------------------------------------------------------------------- |
+| Five-method comparison table | `output/metrics.csv`, via `run_method_*` then `evaluate_all`                     |
+| LLM before/after table       | The same entry points with`--llm-extract`, landing in `output/experiments/*__llm/` |
+| Threshold curve              | The`threshold_curve` key of each `output/debug/<method>/report.json`               |
+| Adversarial 7/7              | `python3 -m prediction.regression_checks`                                            |
 
 The 95% Wilson intervals and the p-values on the LLM slide were computed separately and are not regenerated by any script in this repository.
 
@@ -275,12 +256,12 @@ Dependencies point one way: `preprocessing → core ← prediction`. Silver-stan
 
 ## 📚 Further reading
 
-| Document | Contents |
-|---|---|
-| [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md) | The recommended implementation in depth, with per-switch ablations |
-| [docs/TECHNICAL_PLAN.md](docs/TECHNICAL_PLAN.md) | Problem definition, `group_key` design, metric definitions, risk register |
-| [docs/data_exploration.md](docs/data_exploration.md) | Field fill rates, barcode availability, and dirty-data patterns across the 1,472 raw rows |
-| [docs/research/](docs/research/) | One-off probe scripts and their recorded output — the measured evidence behind each design decision |
+| Document                                            | Contents                                                                                             |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| [docs/IMPLEMENTATION.md](docs/IMPLEMENTATION.md)     | The recommended implementation in depth, with per-switch ablations                                   |
+| [docs/TECHNICAL_PLAN.md](docs/TECHNICAL_PLAN.md)     | Problem definition,`group_key` design, metric definitions, risk register                           |
+| [docs/data_exploration.md](docs/data_exploration.md) | Field fill rates, barcode availability, and dirty-data patterns across the 1,472 raw rows            |
+| [docs/research/](docs/research/)                     | One-off probe scripts and their recorded output — the measured evidence behind each design decision |
 
 ## Author
 
@@ -288,13 +269,4 @@ Dependencies point one way: `preprocessing → core ← prediction`. Silver-stan
 
 - Github: [@esemsc-yy1824](https://github.com/esemsc-yy1824)
 
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome!<br />Feel free to check the [issues page](https://github.com/esemsc-yy1824/hktv-sku-group/issues).
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
-***
-_README format based on [readme-md-generator](https://github.com/kefranabg/readme-md-generator)._
+---
