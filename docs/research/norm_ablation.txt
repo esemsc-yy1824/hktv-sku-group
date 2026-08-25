@@ -1,0 +1,11 @@
+silver-standard positive pairs: 193
+
+normalisation level       pairs silver rec
+----------------------------------------------
+L0 raw title                153      24.9%
+L1 +NFKC/lowercase          153      24.9%
+L2 +strip marketing         153      24.9%
+L3 +strip pack markers      164      24.9%
+L4 +soap synonyms           164      24.9%
+L5 +drop punctuation        200      28.0%
+L6 +bag of words            231      28.0%

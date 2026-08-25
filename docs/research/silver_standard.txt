@@ -1,0 +1,18 @@
+barcode pool: 190; SKUs carrying a barcode: 273
+silver-standard positive pairs: 193; of which cross-merchant: 175
+
+=== silver-standard selection bias check (with vs without barcode) ===
+  brand set         with EAN  92.3%   without EAN  90.6%   diff  +1.7pp
+  pack_size set     with EAN  32.2%   without EAN  39.5%   diff  -7.3pp
+  origin set        with EAN  93.8%   without EAN  94.5%   diff  -0.7pp
+  description set   with EAN  59.0%   without EAN  70.7%   diff -11.8pp
+  name has noise    with EAN  49.5%   without EAN  28.7%   diff +20.8pp
+
+naive baseline (exact match on normalised title) predicted positive pairs: 166
+  intersection with silver standard (TP): 54
+  silver recall: 28.0%  (54/193)
+  note: precision cannot be computed against the silver standard (positives only, no negatives)
+  [brand blocking + 2-gram Jaccard>=0.5] pairs=  2342  silver recall= 42.5%
+  [brand blocking + 2-gram Jaccard>=0.6] pairs=  1355  silver recall= 40.9%
+  [brand blocking + 2-gram Jaccard>=0.7] pairs=   735  silver recall= 35.2%
+  [brand blocking + 2-gram Jaccard>=0.8] pairs=   337  silver recall= 28.5%

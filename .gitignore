@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# Office lock/temp files
+~$*
+
+# Local caches (including paid API embeddings)
+.cache/
+
+# Artefacts from experiment configurations: the conclusions are recorded in docs/research/, so the raw artefacts are not committed
+output/experiments/

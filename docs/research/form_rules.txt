@@ -1,0 +1,36 @@
+=== product_form distribution under the priority rules ===
+   1177  soap_bar
+     96  accessory
+     46  UNKNOWN
+     31  laundry_soap
+     30  shampoo_bar
+     22  soap_paper
+     20  body_wash
+     15  deodorant
+     10  hand_wash
+      8  face_cleanser
+      8  bath_bomb_salt
+      5  shampoo_liquid
+      4  hand_cream
+
+rows hitting several form keywords (priority needed): 220
+
+=== 18 sampled rows: did priority pick the right one? ===
+  -> soap_paper      (candidates ['soap_paper', 'soap_bar'])  (藍色牛奶味) 便攜香皂紙, 兒童洗手香皂片, 外出旅行, 防疫衛生殺菌, 一次性番梘紙, 花瓣香皂紙片
+  -> accessory       (candidates ['accessory', 'soap_bar'])  Najel 阿勒頗天然手工古皂 5%月桂油 95%橄欖油 200g (送起泡袋) 香港行貨 法國品牌
+  -> shampoo_bar     (candidates ['shampoo_bar', 'soap_bar'])  平衡洗髮皂
+  -> laundry_soap    (candidates ['laundry_soap', 'soap_bar'])  檸檬馬賽皂 (COSMOS NAT認證）
+  -> accessory       (candidates ['accessory', 'soap_paper', 'soap_bar'])  (50片蘋果味）日本便攜香皂紙 /兒童洗手香皂片 /外出旅行/防疫衛生殺菌/一次性番梘紙
+  -> accessory       (candidates ['accessory', 'soap_paper', 'soap_bar'])  (50片薰衣草）日本便攜香皂紙 /兒童洗手香皂片 /外出旅行/防疫衛生殺菌/一次性番梘紙
+  -> shampoo_bar     (candidates ['shampoo_bar', 'soap_bar'])  養護洗髮皂
+  -> accessory       (candidates ['accessory', 'soap_bar'])  Najel 阿勒頗天然手工古皂 12%月桂油 88%橄欖油 200g (送起泡袋) 香港行貨 法國品牌
+  -> hand_wash       (candidates ['hand_wash', 'soap_bar'])  Best Botanicals 香皂 200g*8 塊 洗手液 潔手液 香皂 潔面皂 沐浴皂 肥皂香皂 滋潤肌膚
+  -> laundry_soap    (candidates ['laundry_soap', 'soap_bar'])  RESANI | 青蛙總管  植物萃取洗衣皂 綠蘋果香  300g
+  -> laundry_soap    (candidates ['laundry_soap', 'soap_bar'])  妙晨玫瑰精油內衣皂 親膚溫和抑菌內褲清洗皂 女士私處衣物去血漬污漬潔膚香皂【平行進口】
+  -> accessory       (candidates ['accessory', 'soap_paper', 'soap_bar'])  (50片薄荷味）日本便攜香皂紙 /兒童洗手香皂片 /外出旅行/防疫衛生殺菌/一次性番梘紙
+  -> accessory       (candidates ['accessory', 'soap_paper', 'soap_bar'])  (50片薰衣草）日本便攜香皂紙 /兒童洗手香皂片 /外出旅行/防疫衛生殺菌/一次性番梘紙
+  -> shampoo_bar     (candidates ['shampoo_bar', 'soap_bar'])  生薑洗髮健髮手工皂 60g 洗髮皂 頭皮護理 祛頭風 控油防脫
+  -> shampoo_bar     (candidates ['shampoo_bar', 'soap_bar'])  100g*2 生薑薑黃洗髮皂
+  -> face_cleanser   (candidates ['face_cleanser', 'soap_bar'])  茉莉精油潔面香皂 洗潤兩用溫和潔顏皂｜平行進口
+  -> body_wash       (candidates ['body_wash', 'soap_bar'])  Creme Care 牛奶滋潤沐浴乳 白皂香味 補充裝 340ML X 2
+  -> accessory       (candidates ['accessory', 'soap_paper', 'soap_bar'])  (50片薄荷味）日本便攜香皂紙 /兒童洗手香皂片 /外出旅行/防疫衛生殺菌/一次性番梘紙

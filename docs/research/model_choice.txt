@@ -1,0 +1,24 @@
+==============================================================================
+scorer selection: out-of-fold AUC   (method 5, 494 pairs / 185 pos, 5 EAN folds)
+==============================================================================
+
+  model                             OOF AUC
+  ------------------------------------------
+  GBDT 180 trees/depth 2             0.9762
+  GBDT 180 trees/depth 3 (prod)      0.9757
+  GBDT 400 trees/depth 4             0.9656
+  logistic regression                0.8858
+
+  AUC = the chance the model scores a random positive above a random negative. 0.5 = coin flip.
+
+------------------------------------------------------------------------------
+end to end: swap the tree depth, the four honest-track metrics (threshold 0.98)
+------------------------------------------------------------------------------
+
+  config                   complete  mismerge precision  pack inv advers.
+  depth 2/180 trees           63.7%     2.48%     88.5%    100.0%     7/7
+  depth 3/180 trees (prod)    61.7%     1.24%     93.7%    100.0%     7/7
+  depth 4/400 trees           58.5%     2.33%     88.3%    100.0%     7/7
+
+  How to read: AUC judges pairwise ranking only; the release gate is these four metrics plus the
+  adversarial regression. If the two disagree, the lower table wins: we ship a pipeline, not a ranker.

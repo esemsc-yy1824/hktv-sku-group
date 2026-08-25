@@ -1,0 +1,23 @@
+=== suspected non-brand values ===
+    9  優質生活百貨
+   18  內地直送
+    4  屯團百貨
+    2  日豚百貨
+
+=== brand backfill ===
+  brand missing: 134;  known brand matched in title: 10 (7.5%)
+    -> [JAM]  泰國✿JAM✿天然米乳手工冷製皂✿100g✿
+    -> [LUX]  Natures Beauty Lanolux 溫和皂 (含羊毛脂和燕麥片)100克 [平行進口]
+    -> [JAM]  泰國製造✿Jam✿洗臉洗澡香皂✿柑橘✿65克
+    -> [PELICAN]  PelicanSoap-家族皂 藥用柿子 80g (平行進口)
+    -> [JAM]  泰國大米皂 JAM手工米乳皂 清潔沐浴香皂 泰國jam大米皂米奶皂 手工皂 洗臉皂 洗面皂 天然無添加 安全成份 母嬰適
+    -> [PELICAN]  日本Pelican石鹸 日本製 Sachico 幸福玫瑰花香 沐浴香皂番梘 80g (814)【市集世界 - 日本市集】
+    -> [JAM]  《Jam》—身體護理-膠原蛋白米奶天然手工沐浴香皂(65g)(平行進口)
+    -> [JAM]  泰國製造JAM 手工米乳皂65g (平行進口貨)
+    -> [JAM]  泰國大米皂 JAM手工米乳皂 清潔沐浴香皂 泰國jam大米皂米奶皂 手工皂 洗臉皂 洗面皂 天然無添加 安全成份 母嬰適
+    -> [JAM]  [65g] 泰國大米皂 JAM手工米乳皂 清潔沐浴香皂 泰國jam大米皂米奶皂 手工皂 洗臉皂 洗面皂 天然無添加 安全
+
+=== brand alias candidates (substring relation + same main origin) ===
+  pelican(37) <-> pelicanforback(1)   origin=日本
+
+=== merge opportunities across brand strings (same origin, heavy title-token overlap) ===

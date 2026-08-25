@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HKTVmall Product Grouping · Method &amp; Results</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;1,9..40,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Signal: deep navy / off-white dual surfaces, a single antique-gold accent
+   Fixed 1920×1080 stage; every size derived from 1vw=19.2px / 1vh=10.8px
+   ============================================================ */
+:root{
+  --navy:#1C2644; --navy-alt:#232F55; --cream:#F0ECE3; --cream-alt:#E6E0D4;
+  --fg:#E2DCD0; --fg2:#8A96A8; --fg3:#4E5A6E;
+  --ink:#1A2030; --ink2:#5A6270; --ink3:#9AA0A8;
+  --gold:#C8A870; --bd:#2E3D5C; --bdl:#CAC4B4; --red:#C0272D;
+  --serif:"Source Serif 4","Noto Serif SC",Georgia,serif;
+  --sans:"DM Sans","Noto Sans SC",system-ui,sans-serif;
+  --mono:"IBM Plex Mono","JetBrains Mono",monospace;
+  --padx:144px; --pady:62px; --gl:43px; --gm:27px; --gs:13px;
+  --stage-bg:#0E1424;
+}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--stage-bg)}
+*{box-sizing:border-box}
+
+section.slide{
+  width:1920px;height:1080px;position:relative;overflow:hidden;
+  background:var(--navy);color:var(--fg);
+  font-family:var(--sans);font-size:20px;line-height:1.65;
+  display:grid;grid-template-rows:auto 1fr auto;
+  padding:var(--pady) var(--padx);
+}
+/* 80px grid texture: the system fingerprint, dark slides only */
+section.slide.dark::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+             linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+  background-size:80px 80px;
+}
+section.slide.light{background:var(--cream);color:var(--ink)}
+section.slide.light .kicker{color:var(--gold)}
+section.slide.light .rule-full,section.slide.light .chrome,section.slide.light .foot{border-color:var(--bdl)}
+section.slide.light .muted{color:var(--ink2)}
+section.slide.light .hint{color:var(--ink3)}
+section.slide.chromeless{grid-template-rows:1fr}
+
+/* ---------- layout skeleton ---------- */
+.chrome{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1px solid var(--bd);padding-bottom:var(--gs);margin-bottom:var(--gm);
+  font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--fg3)}
+section.slide.light .chrome{color:var(--ink3)}
+.foot{display:flex;justify-content:space-between;align-items:baseline;
+  border-top:1px solid var(--bd);padding-top:var(--gs);margin-top:var(--gm);
+  font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3)}
+section.slide.light .foot{color:var(--ink3)}
+.body{min-height:0;display:flex;flex-direction:column;justify-content:center;gap:var(--gm)}
+
+/* ---------- typography ---------- */
+.kicker{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--gold);margin:0}
+.rule{width:36px;height:1px;background:var(--gold);margin:14px 0 20px}
+.rule-full{width:100%;height:1px;background:none;border-top:1px solid var(--bd);margin:var(--gm) 0}
+h1.display{font-family:var(--serif);font-size:154px;font-weight:700;line-height:.98;
+  letter-spacing:-.02em;margin:0}
+h1.chapter{font-family:var(--serif);font-size:100px;font-weight:600;line-height:1.08;
+  letter-spacing:-.01em;margin:0}
+h2{font-family:var(--serif);font-size:58px;font-weight:600;line-height:1.18;margin:0}
+h2.dense{font-size:46px}
+h3{font-family:var(--serif);font-size:34px;font-weight:500;line-height:1.3;margin:0}
+em{font-family:var(--serif);font-style:italic;color:var(--gold);font-weight:600}
+.lead{font-size:27px;line-height:1.55;margin:0;max-width:1400px}
+.body-t{font-size:20px;line-height:1.62;margin:0}
+.caption{font-size:16px;line-height:1.5;color:var(--fg3);margin:0}
+section.slide.light .caption{color:var(--ink3)}
+.muted{color:var(--fg2)}
+.hint{color:var(--fg3)}
+.num{font-family:var(--serif);font-weight:600;color:var(--gold);letter-spacing:-.02em}
+.tag{display:inline-block;border:1px solid var(--gold);color:var(--gold);
+  padding:.3em .85em;font-family:var(--mono);font-size:13px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase}
+
+/* ---------- lists: gold em-dash bullets ---------- */
+ul.dash{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--gs)}
+/* numbered list: reuses the dash spacing and size, with numbers in place of the dashes */
+ol.dash{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--gs);counter-reset:d}
+ol.dash li{position:relative;padding-left:1.9em;font-size:21px;line-height:1.55;counter-increment:d}
+ol.dash li::before{content:counter(d) ".";position:absolute;left:0;top:0;font-family:var(--mono);font-size:.8em;color:var(--gold)}
+ol.dash.tight li{font-size:19px;line-height:1.45}
+ul.dash li{position:relative;padding-left:1.9em;font-size:21px;line-height:1.55}
+ul.dash li::before{content:"—";position:absolute;left:0;top:0;
+  font-family:var(--mono);color:var(--gold)}
+ul.dash.tight li{font-size:19px;line-height:1.45}
+
+/* ---------- tables: hairline rules only, no fills ---------- */
+table{width:100%;border-collapse:collapse;font-size:21px}
+table.sm{font-size:19px}
+table.xs{font-size:17px}
+/* the comparison table has many columns: no cell wrapping, so headers and the p-value column are no longer squeezed onto two lines */
+table.newt td{white-space:nowrap}
+table.newt{font-size:16px}
+th{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--fg);text-align:left;
+  padding:10px 14px 10px 0;border-bottom:1px solid var(--bd);vertical-align:bottom}
+section.slide.light th{color:var(--ink);border-color:var(--bdl)}
+td{padding:12px 14px 12px 0;border-bottom:1px solid var(--bd);vertical-align:top}
+section.slide.light td{border-color:var(--bdl)}
+tr:last-child td{border-bottom:none}
+td.n,th.n{text-align:right;padding-right:0;font-variant-numeric:tabular-nums}
+/* right-aligned number columns butt up against the next column: pad the right of every non-final column */
+td.n:not(:last-child),th.n:not(:last-child){padding-right:24px}
+td.n{font-family:var(--serif);font-weight:600;color:var(--gold);letter-spacing:-.01em}
+td.n.red{color:var(--red)}
+td.plain{font-family:var(--sans);font-weight:400;color:inherit}
+section.slide.light td.plain{color:var(--ink)}
+td.k{font-family:var(--mono);font-size:16px;letter-spacing:.04em}
+tr.hi td{background:rgba(200,168,112,.07)}
+tr.hi td.plain,tr.hi td:first-child{font-weight:500}
+.mono{font-family:var(--mono);font-size:16px;letter-spacing:.04em}
+code{font-family:var(--mono);font-size:.92em;letter-spacing:.02em}
+
+/* ---------- stat blocks ---------- */
+.stats{display:grid;gap:var(--gm)}
+.stats.c3{grid-template-columns:repeat(3,1fr)}
+.stats.c4{grid-template-columns:repeat(4,1fr)}
+.stat{border-top:1px solid var(--bd);padding-top:18px;padding-right:var(--gm)}
+section.slide.light .stat{border-color:var(--bdl)}
+.stat .v{font-family:var(--serif);font-size:82px;font-weight:600;line-height:1;
+  letter-spacing:-.02em;color:var(--gold)}
+.stat .v.sm{font-size:60px}
+.stat .l{font-size:19px;margin-top:10px}
+.stat .n{font-family:var(--mono);font-size:14px;letter-spacing:.06em;color:var(--fg3);margin-top:6px}
+section.slide.light .stat .n{color:var(--ink3)}
+
+/* ---------- two columns ---------- */
+.cols{display:grid;gap:0;min-height:0}
+.cols.c2{grid-template-columns:1fr 1fr}
+.cols.c2u{grid-template-columns:1.15fr .85fr}
+.cols > *{padding-right:56px;display:flex;flex-direction:column;justify-content:center}
+.cols > * + *{padding-right:0;padding-left:56px;border-left:1px solid var(--bd)}
+section.slide.light .cols > * + *{border-color:var(--bdl)}
+
+/* ---------- process steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gm)}
+.step{border-top:2px solid var(--gold);padding-top:18px;padding-right:var(--gm)}
+.step .i{font-family:var(--mono);font-size:14px;letter-spacing:.14em;color:var(--gold)}
+.step h3{margin:10px 0 12px}
+
+/* ---------- example box ---------- */
+.ex{border-left:1px solid var(--gold);padding-left:20px;font-family:var(--mono);
+  font-size:17px;line-height:1.75;letter-spacing:.02em}
+.ex .arrow{color:var(--gold)}
+
+/* ---------- cover ---------- */
+.cover{display:flex;flex-direction:column;justify-content:center;height:100%}
+.cover .meta{display:flex;gap:56px;margin-top:52px;font-family:var(--mono);
+  font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3)}
+
+/* ---------- chapter page ---------- */
+.chap{display:flex;flex-direction:column;justify-content:center;height:100%}
+.chap .no{font-family:var(--mono);font-size:15px;letter-spacing:.22em;color:var(--gold)}
+
+/* ---------- entrance animation ---------- */
+[data-deck-active] .reveal{animation:rise .62s cubic-bezier(.2,.8,.2,1) both}
+[data-deck-active] .reveal:nth-child(1){animation-delay:.04s}
+[data-deck-active] .reveal:nth-child(2){animation-delay:.12s}
+[data-deck-active] .reveal:nth-child(3){animation-delay:.2s}
+[data-deck-active] .reveal:nth-child(4){animation-delay:.28s}
+[data-deck-active] .reveal:nth-child(5){animation-delay:.36s}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.2s!important}
+}
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+<!-- 01 Cover -->
+<section class="slide dark chromeless" data-label="Cover">
+  <div class="cover">
+    <p class="kicker reveal">HKTVmall · Product Grouping · Entity Resolution</p>
+    <div class="rule"></div>
+    <h1 class="display reveal">Putting the same product<br>into <em>one group</em></h1>
+    <p class="lead muted reveal" style="margin-top:40px;max-width:1200px">
+      1,472 soap SKUs from 299 merchants. The task is to tell each listing which real
+      product it belongs to.</p>
+    <div class="meta reveal">
+      <span>Method &amp; Results</span><span>Five approaches compared</span><span>2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- 02 The problem -->
+<section class="slide light" data-label="The problem">
+  <div class="chrome"><span>01 · The problem</span><span>02</span></div>
+  <div class="body">
+    <div class="reveal">
+      <div class="rule"></div>
+      <h2 class="dense">Putting the same product into <em>one group</em></h2>
+    </div>
+    <div class="cols c2u reveal" style="flex:1;min-height:0">
+      <div>
+        <h3 style="margin-bottom:20px">The problems</h3>
+        <ol class="dash tight">
+          <li>Titles mix marketing copy, pack counts, parallel-import tags and other noise</li>
+          <li>Brand name missing on <span class="num">9.1%</span> of listings</li>
+          <li>The size field carries a value on only <span class="num">38.2%</span></li>
+          <li>A large number of groups</li>
+          <li>No ground truth (no target value)</li>
+        </ol>
+      </div>
+      <div>
+        <h3 style="margin-bottom:20px">Two business rules</h3>
+        <ul class="dash">
+          <li><strong>Pack count does not define a product</strong><br>
+            <span class="muted">A single bar and a 6-pack are the same product</span></li>
+          <li><strong>Brand, unit size and origin together define identity</strong><br>
+            <span class="muted">Lemon and rose must stay apart</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>HKTVmall product grouping</span><span>Data: 1,472 SKUs / 2 soap categories</span></div>
+</section>
+
+<!-- 03 Headline result -->
+<section class="slide light" data-label="Headline result">
+  <div class="chrome"><span>02 · Headline result</span><span>03</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">Five approaches, one pipeline</p>
+      <div class="rule"></div>
+      <h2 class="dense">Recommending <em>Approach 5</em>: highest correctness and completeness inside the release gate</h2>
+    </div>
+    <table class="sm reveal">
+      <thead><tr>
+        <th style="width:22%">Approach</th><th class="n">Completeness</th><th class="n">Wrong merges</th><th class="n">Correctness</th>
+        <th class="n">Pack invariance</th><th class="n">Runtime</th><th class="n">Tokens</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="plain">1 · Shared words only</td><td class="n">54.9%</td><td class="n">2.48%</td><td class="n">86.9%</td><td class="n">98.8%</td><td class="n">8.9s</td><td class="n">0</td></tr>
+        <tr><td class="plain">2 · Local word-frequency vector</td><td class="n">54.9%</td><td class="n">2.17%</td><td class="n">88.3%</td><td class="n">100%</td><td class="n">10.7s</td><td class="n">0</td></tr>
+        <tr><td class="plain">3 · OpenAI semantic vector</td><td class="n">57.5%</td><td class="n">2.33%</td><td class="n">88.1%</td><td class="n">98.8%</td><td class="n">10.3s</td><td class="n">311k</td></tr>
+        <tr><td class="plain">4 · Semantic vector + photo</td><td class="n">62.7%</td><td class="n">2.33%</td><td class="n">89.0%</td><td class="n">98.8%</td><td class="n">11.1s</td><td class="n">311k</td></tr>
+        <tr class="hi"><td class="plain">5 · Semantic + word freq + photo</td><td class="n red">69.4%</td><td class="n">2.48%</td><td class="n red">89.3%</td><td class="n">100%</td><td class="n">12.4s</td><td class="n">311k</td></tr>
+      </tbody>
+    </table>
+      </div>
+  <div class="foot"><span>Leak-free run: barcode retrieval and barcode must-links disabled during evaluation</span><span>03</span></div>
+</section>
+
+<!-- 04 Chapter: method -->
+<section class="slide dark chromeless" data-label="Chapter · Method">
+  <div class="chap">
+    <p class="no reveal">Part one</p>
+    <div class="rule"></div>
+    <h1 class="chapter reveal">From raw text<br>to a <em>three-step pipeline</em></h1>
+  </div>
+</section>
+
+<!-- 05 Preprocessing -->
+<section class="slide light" data-label="Preprocessing">
+  <div class="chrome"><span>03 · Preprocessing</span><span>05</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">One script, one output</p>
+      <div class="rule"></div>
+      <h2 class="dense">Data <em>preprocessing</em></h2>
+    </div>
+    <div class="cols c2u reveal" style="flex:1;min-height:0">
+      <div>
+        <ul class="dash tight">
+          <li><strong>Normalise how things are written</strong>: full-width to half-width,
+            one letter case, whitespace stripped &mdash; so "１００Ｇ"
+            and "100g" become one token</li>
+          <li><strong>Strip marketing words</strong>: parallel import, local stock,
+            random packaging, expiry date and so on</li>
+          <li><strong>Parse seven fields out of the title and body text</strong>: EAN-13 barcode,
+            brand, unit size, unit of measure, pack count, origin, product form</li>
+          <li><strong>Discover the words that distinguish variants</strong>: surface rare terms
+            like rose, lemon and aloe (via TF-IDF)</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:16px">EAN-13: the common 13-digit global trade item number</h3>
+        <p class="caption" style="margin-bottom:16px">
+          A manufacturer assigns one globally unique thirteen-digit number to
+          <strong>every size of every product</strong>. Numbers are issued per tradeable unit,
+          which means a single bar and a 6-pack of the same soap also differ.</p>
+        <div class="ex" style="margin-bottom:16px">
+          check digit = (10 − (odd×1 + even×3) mod 10) mod 10
+        </div>
+        <ul class="dash tight">
+          <li>A random 13-digit string passes the check only 1 time in 10</li>
+          <li>13-digit strings pulled from <strong>sku_id</strong> pass at
+            <strong>82.7% (229/277)</strong>, far above 10%, so almost all really are barcodes</li>
+          <li><strong>By Bayes' rule</strong>: <span class="num">97.67%</span>&ndash;100% of the
+            check-passing 13-digit strings are valid EAN-13 barcodes<br>
+            <span class="muted">The lower end assumes non-barcodes pass by luck 1 time in 10; the less random they are, the closer to 100%</span></li>
+          <li>Across all listing fields, <span class="num">190</span> distinct check-passing
+            barcodes covering <span class="num">273</span> listings (18.5%)</li>
+        </ul>
+        <p class="caption" style="margin-top:16px">
+          Merchants mistype, so a barcode is high-confidence evidence rather than ground truth.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Output: soap_sku_data_preprocessed.xlsx + silver labels</span><span>05</span></div>
+</section>
+
+
+<!-- 07 Pipeline -->
+<section class="slide light" data-label="Pipeline">
+  <div class="chrome"><span>04 · Pipeline</span><span>06</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">Shared by all five</p>
+      <div class="rule"></div>
+      <h2 class="dense">Shortlist → score → <em>group</em></h2>
+    </div>
+    <div class="steps reveal" style="margin-top:12px">
+      <div class="step">
+        <div class="i">STEP 01</div>
+        <h3>Shortlist: who is worth comparing</h3>
+        <p class="body-t muted">1,472 listings make 1.08 million pairs, and comparing all of them
+          is slow and error-prone. Five channels run in parallel to surface likely matches;
+          a hit on any one is enough.</p>
+      </div>
+      <div class="step">
+        <div class="i">STEP 02</div>
+        <h3>Score every pair</h3>
+        <p class="body-t muted">Each shortlisted pair gets a score from 0 to 1.
+          The scorer is a gradient-boosted decision tree (GBDT).</p>
+      </div>
+      <div class="step">
+        <div class="i">STEP 03</div>
+        <h3>Group, with hard vetoes</h3>
+        <p class="body-t muted">Pairs above the threshold link into groups. Different unit size,
+          conflicting origin, clearly different scent: any of these vetoes the merge
+          outright.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>1,472 listings → roughly 1,060–1,140 groups</span><span>06</span></div>
+</section>
+
+<!-- 08 Five channels -->
+<section class="slide light" data-label="Five channels">
+  <div class="chrome"><span>04 · Step one · Shortlist</span><span>07</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">Step 01</p>
+      <div class="rule"></div>
+      <h2 class="dense">Shortlist: five channels, <em>one hit is enough</em></h2>
+    </div>
+    <table class="sm reveal">
+      <thead><tr><th style="width:26%">Channel</th><th>How it decides</th></tr></thead>
+      <tbody>
+        <tr><td class="plain">Same barcode</td><td class="plain muted">Strongest evidence: an identical EAN-13</td></tr>
+        <tr><td class="plain">Same brand + size</td><td class="plain muted">Every listing of the same brand at the same weight</td></tr>
+        <tr><td class="plain">Same cleaned title</td><td class="plain muted">Identical string after stripping pack and size markers and normalising</td></tr>
+        <tr class="hi"><td class="plain">Top 20 nearest vectors</td><td class="plain muted">The vector behind this channel <strong>changes with the approach</strong>; Approach 1 has no vector and skips it</td></tr>
+        <tr><td class="plain">shop identity, size value, unit</td><td class="plain muted">(manufacturer identity, size value, unit), all three identical</td></tr>
+      </tbody>
+    </table>
+    <div class="rule-full"></div>
+    <p class="lead reveal" style="max-width:1600px">
+      <em>Why run five in parallel</em>: with a single channel, one blank or mistyped field
+      (origin, say) is enough to strand a listing so it never pairs with anything. Five channels
+      cover for each other, so the approach holds up when the data is imperfect.</p>
+  </div>
+  <div class="foot"><span>Candidate recall: Approach 1 at 95.3%, Approach 2 at 95.9%, Approaches 3–5 at 98.4%</span><span>07</span></div>
+</section>
+
+<!-- 10 Pairwise scoring (former 10 + 11 merged) -->
+<section class="slide light" data-label="Pairwise scoring">
+  <div class="chrome"><span>05 · Step two · Scoring</span><span>08</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">Step 02 · Gradient-boosted decision trees</p>
+      <div class="rule"></div>
+      <h2 class="dense">Scoring: <em>gradient-boosted decision trees (GBDT)</em>, voting together</h2>
+    </div>
+    <div class="cols c2 reveal" style="flex:1;min-height:0">
+      <div>
+        <h3 style="margin-bottom:14px">Two guards against self-deception</h3>
+        <ul class="dash tight">
+          <li><strong>Five-fold cross-validation.</strong></li>
+          <li><strong>Every listing under one barcode must land in the same fold</strong>, so
+            listings sharing a barcode are never split across train and test.</li>
+        </ul>
+        <div class="rule-full"></div>
+        <h3 style="margin-bottom:14px">Why GBDT and not something else</h3>
+        <table class="xs">
+          <thead><tr><th>Model</th><th class="n">Out-of-fold AUC</th></tr></thead>
+          <tbody>
+            <tr><td class="plain">GBDT 180 trees / depth 2</td><td class="n">0.9762</td></tr>
+            <tr class="hi"><td class="plain">GBDT 180 trees / depth 3 (in use)</td><td class="n">0.9757</td></tr>
+            <tr><td class="plain">GBDT 400 trees / depth 4</td><td class="n">0.9656</td></tr>
+            <tr><td class="plain">Logistic regression</td><td class="n">0.8858</td></tr>
+          </tbody>
+        </table>
+        <p class="caption" style="margin-top:14px">
+          Depth 2 wins on AUC by 0.0005 but loses end to end: 2.48% vs 1.24% wrong merges,
+          88.5% vs 93.7% precision (measured at the then-fixed 0.98). What ships is the pipeline, not the ranker.</p>
+      </div>
+      <div>
+        <h3 style="margin-bottom:14px">What the model actually uses</h3>
+        <p class="caption" style="margin-bottom:14px">Weights read straight out of the trained model.</p>
+        <table class="sm">
+          <thead><tr><th>Source</th><th class="n">Weight</th><th class="n">Features</th></tr></thead>
+          <tbody>
+            <tr class="hi"><td class="plain">Text and variant similarity</td><td class="n">60.4%</td><td class="n">12</td></tr>
+            <tr><td class="plain">Local word-frequency vector</td><td class="n">16.4%</td><td class="n">1</td></tr>
+            <tr><td class="plain">OpenAI semantic vector</td><td class="n">9.7%</td><td class="n">1</td></tr>
+            <tr><td class="plain">Attribute agreement</td><td class="n">8.1%</td><td class="n">10</td></tr>
+            <tr><td class="plain">Product photo</td><td class="n">5.5%</td><td class="n">3</td></tr>
+          </tbody>
+        </table>
+        <div class="rule-full"></div>
+        <p class="body-t muted">
+          With a few hundred training pairs, wildly different feature scales and a need for
+          interpretability, trees are the right tool at this size.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>AUC: chance that a random true pair outranks a random false pair. 0.5 = random</span><span>08</span></div>
+</section>
+
+<!-- 12 Grouping -->
+<section class="slide light" data-label="Grouping">
+  <div class="chrome"><span>06 · Step three · Grouping</span><span>09</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">Step 03</p>
+      <div class="rule"></div>
+      <h2 class="dense">Grouping with hard vetoes: <em>constrained clustering</em></h2>
+    </div>
+    <div class="cols c2u reveal" style="flex:1;min-height:0">
+      <div>
+        <ul class="dash">
+          <li>The threshold applies to <strong>average linkage between clusters</strong>, not to
+            individual pairs</li>
+          <li>Hard vetoes: different unit size, conflicting origin, clearly different scent</li>
+          <li>Forced links: E.g. identical barcode</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:16px">Examples of a hard veto</h3>
+        <table class="xs">
+          <thead><tr><th style="width:26%">Veto reason</th><th>Example listings</th><th class="n" style="width:13%">Pairs</th></tr></thead>
+          <tbody>
+            <tr><td class="plain">Different unit size</td>
+              <td class="plain muted"><span class="mono">30ml</span> 止汗露…滾珠噴霧<br>
+                <span class="mono">50ml</span> 止汗露…滾珠液香體</td>
+              <td class="n">4998</td></tr>
+            <tr><td class="plain">Different form</td>
+              <td class="plain muted"><span class="mono">沐浴露</span> 綠薄荷香氛沐浴露 500ml<br>
+                <span class="mono">護手霜</span> 紅茶香氛護手霜 50ml</td>
+              <td class="n">447</td></tr>
+            <tr><td class="plain">Conflicting origin</td>
+              <td class="plain muted"><span class="mono">日本</span> 日本藥用清潔皂 100g<br>
+                <span class="mono">台灣</span> DR.ITAYA 黑魔法美背皂 100g</td>
+              <td class="n">370</td></tr>
+            <tr class="hi"><td class="plain">Conflicting scent</td>
+              <td class="plain muted"><span class="mono">蜂蜜</span> 泰國天然蜂蜜手工皂<br>
+                <span class="mono">蘆薈</span> 泰國天然蘆薈手工皂</td>
+              <td class="n">4229</td></tr>
+          </tbody>
+        </table>
+        <p class="caption" style="margin-top:16px">
+          The first three are filtered at <strong>candidate generation</strong> and never reach the
+          scorer. Scent conflicts need the variant signature, so they veto <strong>after</strong> scoring.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>1,472 SKUs → roughly 1,060–1,140 real products</span><span>09</span></div>
+</section>
+
+<!-- 13 Chapter: five approaches -->
+<section class="slide dark chromeless" data-label="Chapter · Five approaches">
+  <div class="chap">
+    <p class="no reveal">Part two</p>
+    <div class="rule"></div>
+    <h1 class="chapter reveal">Five approaches<br>and <em>how to read them</em></h1>
+    <p class="lead muted reveal" style="margin-top:36px;max-width:1050px">
+      One difference only: how a product is represented.</p>
+  </div>
+</section>
+
+<!-- 14 The five approaches -->
+<section class="slide light" data-label="The five approaches">
+  <div class="chrome"><span>07 · Five approaches</span><span>11</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">One pipeline, five representations</p>
+      <div class="rule"></div>
+      <h2 class="dense">The only difference: <em>how a product is represented</em></h2>
+    </div>
+    <table class="sm reveal">
+      <thead><tr>
+        <th style="width:9%">No.</th><th style="width:20%">Representation</th>
+        <th>In plain terms</th><th class="n" style="width:11%">Needs LLM</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="plain">1</td><td class="plain">Shared words only</td>
+          <td class="plain muted">Counts things you can count directly, such as how many words two names share</td><td class="n">no</td></tr>
+        <tr><td class="plain">2</td><td class="plain">Local word-frequency vector</td>
+          <td class="plain muted">Turns names into numbers on our own machine, using TF-IDF: a term weighs more the oftener it appears in one listing and the rarer it is across all listings, so a distinctive word like "Aleppo" identifies a product far better than a ubiquitous one like "soap"</td><td class="n">no</td></tr>
+        <tr><td class="plain">3</td><td class="plain">OpenAI semantic vector</td>
+          <td class="plain muted">Uses OpenAI's model to produce the numbers. Having read vast text in training, it knows two names for goat-milk soap mean the same thing</td><td class="n">yes</td></tr>
+        <tr><td class="plain">4</td><td class="plain">Semantic vector + photo</td>
+          <td class="plain muted">Approach 3 plus three signals taken from the product photo</td><td class="n">yes</td></tr>
+        <tr class="hi"><td class="plain">5</td><td class="plain">Semantic + word freq + photo</td>
+          <td class="plain muted">Semantic vector, local TF-IDF and photo enter the model <strong>side by side</strong> instead of being averaged into one score first</td><td class="n">yes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="foot"><span>The two vectors in Approach 5 are complementary: semantics for synonyms, TF-IDF for exact model codes</span><span>11</span></div>
+</section>
+
+<!-- 17 Image finding -->
+<section class="slide light" data-label="Image finding">
+  <div class="chrome"><span>08 · A counter-intuitive result</span><span>12</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">Measure first, conclude second</p>
+      <div class="rule"></div>
+      <h2 class="dense">"More similar photos mean the same product" <em>is false</em></h2>
+    </div>
+    <p class="lead reveal" style="max-width:1640px">
+      In practice, <strong>different variants of one product line always share a single packaging
+      design</strong>. So structural image similarity runs <strong>higher</strong> on exactly the
+      listings that are hardest to tell apart.</p>
+    <div class="cols c2 reveal" style="flex:1;min-height:0">
+      <div>
+        <h3 style="margin-bottom:16px">Naive similarity: shape signals below random</h3>
+        <table class="xs">
+          <thead><tr><th>Image descriptor</th><th class="n">AUC</th></tr></thead>
+          <tbody>
+            <tr class="hi"><td class="plain">Greyscale structure</td><td class="n">0.419</td></tr>
+            <tr><td class="plain">Hue histogram</td><td class="n">0.601</td></tr>
+            <tr><td class="plain">dhash normalised similarity</td><td class="n">0.425</td></tr>
+          </tbody>
+        </table>
+        <p class="caption" style="margin-top:16px">
+          0.5 is random. Both shape descriptors sit <strong>below</strong> it — the more alike, the
+          likelier these are <em>different</em> scents from one line. Only hue (0.601) helps a
+          little, since a new scent usually means new colours.</p>
+      </div>
+      <div>
+        <h3 style="margin-bottom:16px">The clean signal: reused photos</h3>
+        <table class="xs">
+          <thead><tr><th>dhash distance</th><th class="n">True pairs hit</th><th class="n">False pairs hit</th></tr></thead>
+          <tbody>
+            <tr><td class="k">≤ 0</td><td class="n">13.0%</td><td class="n">0 / 645</td></tr>
+            <tr class="hi"><td class="k">≤ 2 · in use</td><td class="n">17.1%</td><td class="n">2 / 645</td></tr>
+            <tr><td class="k">≤ 4</td><td class="n">17.6%</td><td class="n">13 / 645</td></tr>
+          </tbody>
+        </table>
+        <p class="caption" style="margin-top:16px">
+          Resellers of the same product routinely reuse the manufacturer's photo. Re-uploaded,
+          the filename differs but the pixels barely do, and that is the usable evidence.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>All three image signals go to the model unsigned; it decides how to weigh them</span><span>12</span></div>
+</section>
+
+<!-- 15 Reading the metrics -->
+<section class="slide light" data-label="Reading the metrics">
+  <div class="chrome"><span>09 · Metric definitions</span><span>13</span></div>
+  <div class="body">
+    <div class="reveal">
+      <div class="rule"></div>
+      <h2 class="dense">Six <em>metrics</em></h2>
+    </div>
+    <table class="sm reveal">
+      <thead><tr><th style="width:22%">Metric</th><th>In plain terms</th><th class="n" style="width:28%">Direction</th></tr></thead>
+      <tbody>
+        <tr><td class="plain">Completeness (recall)</td><td class="plain muted">Of 193 pairs that should merge, how many were found</td><td class="n">higher is better</td></tr>
+        <tr><td class="plain">Wrong-merge rate</td><td class="plain muted">Of 645 pairs that should not merge, how many were merged</td><td class="n">lower is better · the damage metric</td></tr>
+        <tr><td class="plain">Correctness (precision)</td><td class="plain muted">Share of merge decisions that were correct</td><td class="n">higher is better</td></tr>
+        <tr><td class="plain">Pack invariance</td><td class="plain muted">Of 85 pairs differing only in pack count, how many were grouped</td><td class="n">business rule · must be ~100%</td></tr>
+        <tr><td class="plain">Adversarial regression</td><td class="plain muted">Seven hand-verified real failure cases, how many pass</td><td class="n">must be 7/7</td></tr>
+        <tr class="hi"><td class="plain">Release gate</td><td class="plain muted">All of the above must hold before anything ships</td><td class="n">any single failure blocks</td></tr>
+      </tbody>
+    </table>
+    <div class="rule-full"></div>
+    <p class="lead reveal" style="max-width:1640px">
+      <em>Why a gate at all</em>: recall is easy to inflate by merging more (merge everything into
+      one group and recall is 100%). So the rules come first: wrong merges &le; 2.5%, pack invariance
+      &ge; 98%, all seven cases pass. <strong>Only then, among the approaches within 2pp of the best
+      recall, does precision decide.</strong></p>
+  </div>
+  <div class="foot"><span>Pack invariance is a regression test for a business rule, not a performance metric</span><span>13</span></div>
+</section>
+
+<!-- 15 LLM before/after -->
+<section class="slide light" id="cmp15" data-label="LLM extraction · before &amp; after">
+  <div class="chrome"><span>10 · LLM extraction · before &amp; after</span><span>14</span></div>
+  <div class="body" style="gap:18px;justify-content:flex-start">
+    <div class="reveal">
+      <p class="kicker">Optional switch --llm-extract · methods 3 / 4 / 5 · each row labelled with its own operating point · same frozen label files</p>
+      <div class="rule"></div>
+      <h2 class="dense" style="font-size:40px">Three configurations clear p &lt; 0.005; <em>Approach 5</em> is strongest, no LLM</h2>
+    </div>
+    <table class="xs reveal">
+      <thead><tr>
+        <th style="width:22%">Approach</th><th class="n">Threshold</th><th class="n">Completeness</th><th class="n">Wrong merges</th>
+        <th class="n">Correctness</th><th class="n">Pack invariance</th><th class="n">Adversarial</th>
+        <th class="n">Runtime</th><th class="n">Tokens</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="plain">1 · Shared words only</td><td class="n">0.98</td><td class="n">54.9%</td><td class="n">2.48%</td><td class="n">86.9%</td><td class="n">98.8%</td><td class="n">7/7</td><td class="n">8.9s</td><td class="n">0</td></tr>
+        <tr><td class="plain">2 · Local word-frequency vector</td><td class="n">0.99</td><td class="n">54.9%</td><td class="n">2.17%</td><td class="n">88.3%</td><td class="n">100%</td><td class="n">7/7</td><td class="n">10.7s</td><td class="n">0</td></tr>
+        <tr><td class="plain">3 · OpenAI semantic vector</td><td class="n">0.98</td><td class="n">57.5%</td><td class="n">2.33%</td><td class="n">88.1%</td><td class="n">98.8%</td><td class="n">7/7</td><td class="n">10.3s</td><td class="n">311k</td></tr>
+        <tr><td class="plain">4 · Semantic vector + photo</td><td class="n">0.95</td><td class="n">62.7%</td><td class="n">2.33%</td><td class="n">89.0%</td><td class="n">98.8%</td><td class="n">7/7</td><td class="n">11.1s</td><td class="n">311k</td></tr>
+        <tr class="hi"><td class="plain">5 · Semantic + word freq + photo</td><td class="n">0.95</td><td class="n">69.4%</td><td class="n">2.48%</td><td class="n">89.3%</td><td class="n">100%</td><td class="n">7/7</td><td class="n">12.4s</td><td class="n">311k</td></tr>
+      </tbody>
+    </table>
+    <div class="cols c2 reveal" style="min-height:0;flex:1">
+      <div style="justify-content:flex-start">
+        <table class="xs newt">
+      <thead><tr><th style="width:17%">Approach</th><th class="n">Threshold</th><th class="n">Completeness</th><th class="n">Wrong merges</th><th class="n">Correctness</th><th class="n">Pack (79)</th><th class="n">Adversarial</th><th class="n">p vs №3</th></tr></thead>
+      <tbody>
+        <tr><td class="plain">3 · baseline</td><td class="n">0.98</td><td class="n">57.5%</td><td class="n">2.33%</td><td class="n">88.1%</td><td class="n">98.7%</td><td class="n">7/7</td><td class="n">—</td></tr>
+        <tr><td class="plain">3 + LLM</td><td class="n">0.98</td><td class="n">55.4%</td><td class="n">2.17%</td><td class="n">88.4%</td><td class="n">98.7%</td><td class="n">6/7</td><td class="n">0.290</td></tr>
+        <tr><td class="plain">4</td><td class="n">0.95</td><td class="n">62.7%</td><td class="n">2.33%</td><td class="n">89.0%</td><td class="n">98.7%</td><td class="n">7/7</td><td class="n">0.002&nbsp;✓</td></tr>
+        <tr><td class="plain">4 + LLM</td><td class="n">0.95</td><td class="n">62.7%</td><td class="n">1.40%</td><td class="n">93.1%</td><td class="n">98.7%</td><td class="n">7/7</td><td class="n">0.006</td></tr>
+        <tr class="hi"><td class="plain">5</td><td class="n">0.95</td><td class="n">69.4%</td><td class="n">2.48%</td><td class="n">89.3%</td><td class="n">100%</td><td class="n">7/7</td><td class="n">&lt;0.001&nbsp;✓</td></tr>
+        <tr><td class="plain">5 + LLM</td><td class="n">0.98</td><td class="n">64.8%</td><td class="n">1.24%</td><td class="n">94.0%</td><td class="n">100%</td><td class="n">7/7</td><td class="n">0.001&nbsp;✓</td></tr>
+      </tbody>
+    </table>
+      </div>
+      <div style="justify-content:flex-start">
+        <svg viewBox="0 0 680 288" role="img" style="width:100%;height:auto;display:block" aria-label="Completeness 95% confidence intervals">
+      <line x1="70.0" y1="26" x2="70.0" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="70.0" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">45%</text>
+      <line x1="141.4" y1="26" x2="141.4" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="141.4" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">50%</text>
+      <line x1="212.9" y1="26" x2="212.9" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="212.9" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">55%</text>
+      <line x1="284.3" y1="26" x2="284.3" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="284.3" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">60%</text>
+      <line x1="355.7" y1="26" x2="355.7" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="355.7" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">65%</text>
+      <line x1="427.1" y1="26" x2="427.1" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="427.1" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">70%</text>
+      <line x1="498.6" y1="26" x2="498.6" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="498.6" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">75%</text>
+      <line x1="570.0" y1="26" x2="570.0" y2="258" stroke="#CAC4B4" stroke-width="1"/>
+      <text x="570.0" y="278" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">80%</text>
+      <line x1="248.6" y1="26" x2="248.6" y2="258" stroke="#9AA0A8" stroke-width="1"/>
+      <circle cx="66" cy="12" r="5" fill="#41599B"/><text x="78" y="17" font-family="IBM Plex Mono,monospace" font-size="13" fill="#5A6270">regex extraction</text>
+      <circle cx="286" cy="12" r="5" fill="#A67C2E"/><text x="298" y="17" font-family="IBM Plex Mono,monospace" font-size="13" fill="#5A6270">+LLM extraction</text>
+      <text x="60" y="53" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="16" fill="#1A2030">3</text>
+      <line x1="148.6" y1="48" x2="345.7" y2="48" stroke="#41599B" stroke-width="2" stroke-linecap="round"/>
+      <line x1="148.6" y1="43" x2="148.6" y2="53" stroke="#41599B" stroke-width="2"/>
+      <line x1="345.7" y1="43" x2="345.7" y2="53" stroke="#41599B" stroke-width="2"/>
+      <circle cx="248.6" cy="48" r="5.5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>3: 57.5% [50.5, 64.3]</title></circle>
+      <text x="248.6" y="36" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#1A2030">57.5%</text>
+      <text x="60" y="93" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="16" fill="#1A2030">3+LLM</text>
+      <line x1="118.6" y1="88" x2="317.1" y2="88" stroke="#A67C2E" stroke-width="2" stroke-linecap="round"/>
+      <line x1="118.6" y1="83" x2="118.6" y2="93" stroke="#A67C2E" stroke-width="2"/>
+      <line x1="317.1" y1="83" x2="317.1" y2="93" stroke="#A67C2E" stroke-width="2"/>
+      <circle cx="218.6" cy="88" r="5.5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>3+LLM: 55.4% [48.4, 62.3]</title></circle>
+      <text x="218.6" y="76" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#1A2030">55.4%</text>
+      <text x="60" y="133" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="16" fill="#1A2030">4</text>
+      <line x1="222.9" y1="128" x2="415.7" y2="128" stroke="#41599B" stroke-width="2" stroke-linecap="round"/>
+      <line x1="222.9" y1="123" x2="222.9" y2="133" stroke="#41599B" stroke-width="2"/>
+      <line x1="415.7" y1="123" x2="415.7" y2="133" stroke="#41599B" stroke-width="2"/>
+      <circle cx="322.9" cy="128" r="5.5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>4: 62.7% [55.7, 69.2]</title></circle>
+      <text x="322.9" y="116" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#1A2030">62.7%</text>
+      <text x="672" y="133" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#A67C2E">p=0.002 ✓</text>
+      <text x="60" y="173" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="16" fill="#1A2030">4+LLM</text>
+      <line x1="222.9" y1="168" x2="415.7" y2="168" stroke="#A67C2E" stroke-width="2" stroke-linecap="round"/>
+      <line x1="222.9" y1="163" x2="222.9" y2="173" stroke="#A67C2E" stroke-width="2"/>
+      <line x1="415.7" y1="163" x2="415.7" y2="173" stroke="#A67C2E" stroke-width="2"/>
+      <circle cx="322.9" cy="168" r="5.5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>4+LLM: 62.7% [55.7, 69.2]</title></circle>
+      <text x="322.9" y="156" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#1A2030">62.7%</text>
+      <text x="60" y="213" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="16" fill="#1A2030">5</text>
+      <line x1="321.4" y1="208" x2="505.7" y2="208" stroke="#41599B" stroke-width="2" stroke-linecap="round"/>
+      <line x1="321.4" y1="203" x2="321.4" y2="213" stroke="#41599B" stroke-width="2"/>
+      <line x1="505.7" y1="203" x2="505.7" y2="213" stroke="#41599B" stroke-width="2"/>
+      <circle cx="418.6" cy="208" r="5.5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>5: 69.4% [62.6, 75.5]</title></circle>
+      <text x="418.6" y="196" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#1A2030">69.4%</text>
+      <text x="672" y="213" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#A67C2E">p&lt;0.001 ✓</text>
+      <text x="60" y="253" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="16" fill="#1A2030">5+LLM</text>
+      <line x1="252.9" y1="248" x2="444.3" y2="248" stroke="#A67C2E" stroke-width="2" stroke-linecap="round"/>
+      <line x1="252.9" y1="243" x2="252.9" y2="253" stroke="#A67C2E" stroke-width="2"/>
+      <line x1="444.3" y1="243" x2="444.3" y2="253" stroke="#A67C2E" stroke-width="2"/>
+      <circle cx="352.9" cy="248" r="5.5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>5+LLM: 64.8% [57.8, 71.2]</title></circle>
+      <text x="352.9" y="236" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="15" fill="#1A2030">64.8%</text>
+      <text x="672" y="253" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#A67C2E">p=0.001 ✓</text>
+      </svg>
+        <p class="caption" style="margin-top:8px">95% Wilson intervals for completeness; vertical line = baseline (approach 3).</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span></span><span>14</span></div>
+</section>
+
+<!-- 16 Threshold trade-off -->
+<section class="slide light" data-label="Threshold trade-off">
+  <div class="chrome"><span>11 · Approach 5 + LLM · choosing the threshold</span><span>15</span></div>
+  <div class="body" style="gap:16px;justify-content:flex-start">
+    <div class="reveal">
+      <p class="kicker">Approach 5 + LLM extraction · nine measured operating points · honest track</p>
+      <div class="rule"></div>
+      <h2 class="dense" style="font-size:40px">The threshold is a dial between <em>correctness</em> and <em>completeness</em></h2>
+    </div>
+    <div class="cols c2u reveal" style="min-height:0;flex:1">
+      <div style="justify-content:flex-start">
+        <svg viewBox="0 0 1000 560" role="img" style="width:100%;height:auto;display:block" aria-label="Completeness (recall) vs Correctness (precision)">
+        <line x1="70" y1="447.8" x2="970" y2="447.8" stroke="#CAC4B4" stroke-width="1"/>
+        <text x="60" y="451.8" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">60%</text>
+        <line x1="70" y1="343.3" x2="970" y2="343.3" stroke="#CAC4B4" stroke-width="1"/>
+        <text x="60" y="347.3" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">70%</text>
+        <line x1="70" y1="238.9" x2="970" y2="238.9" stroke="#CAC4B4" stroke-width="1"/>
+        <text x="60" y="242.9" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">80%</text>
+        <line x1="70" y1="134.4" x2="970" y2="134.4" stroke="#CAC4B4" stroke-width="1"/>
+        <text x="60" y="138.4" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">90%</text>
+        <line x1="70" y1="30.0" x2="970" y2="30.0" stroke="#CAC4B4" stroke-width="1"/>
+        <text x="60" y="34.0" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">100%</text>
+        <text x="70.0" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.50</text>
+        <text x="182.5" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.60</text>
+        <text x="295.0" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.70</text>
+        <text x="407.5" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.80</text>
+        <text x="520.0" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.85</text>
+        <text x="632.5" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.90</text>
+        <text x="745.0" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.95</text>
+        <text x="857.5" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.98</text>
+        <text x="970.0" y="524" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">0.99</text>
+        <text x="520" y="552" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#9AA0A8">operating threshold</text>
+        <line x1="857.5" y1="26" x2="857.5" y2="500" stroke="#A67C2E" stroke-width="1" opacity="0.45"/>
+        <text x="857.5" y="18" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="13" fill="#A67C2E">pinned 0.98</text>
+        <polyline points="70.0,191.9 182.5,300.5 295.0,295.3 407.5,311.0 520.0,311.0 632.5,365.3 745.0,365.3 857.5,397.6 970.0,468.7" fill="none" stroke="#41599B" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="70.0" cy="191.9" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.50 · Completeness (recall) 84.5%</title></circle>
+        <circle cx="182.5" cy="300.5" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.60 · Completeness (recall) 74.1%</title></circle>
+        <circle cx="295.0" cy="295.3" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.70 · Completeness (recall) 74.6%</title></circle>
+        <circle cx="407.5" cy="311.0" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.80 · Completeness (recall) 73.1%</title></circle>
+        <circle cx="520.0" cy="311.0" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.85 · Completeness (recall) 73.1%</title></circle>
+        <circle cx="632.5" cy="365.3" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.90 · Completeness (recall) 67.9%</title></circle>
+        <circle cx="745.0" cy="365.3" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.95 · Completeness (recall) 67.9%</title></circle>
+        <circle cx="857.5" cy="397.6" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.98 · Completeness (recall) 64.8%</title></circle>
+        <circle cx="970.0" cy="468.7" r="5" fill="#41599B" stroke="#F0ECE3" stroke-width="2"><title>0.99 · Completeness (recall) 58.0%</title></circle>
+        <polyline points="70.0,290.1 182.5,300.5 295.0,248.3 407.5,251.4 520.0,237.8 632.5,185.6 745.0,143.8 857.5,92.7 970.0,100.0" fill="none" stroke="#A67C2E" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="70.0" cy="290.1" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.50 · Correctness (precision) 75.1%</title></circle>
+        <circle cx="182.5" cy="300.5" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.60 · Correctness (precision) 74.1%</title></circle>
+        <circle cx="295.0" cy="248.3" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.70 · Correctness (precision) 79.1%</title></circle>
+        <circle cx="407.5" cy="251.4" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.80 · Correctness (precision) 78.8%</title></circle>
+        <circle cx="520.0" cy="237.8" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.85 · Correctness (precision) 80.1%</title></circle>
+        <circle cx="632.5" cy="185.6" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.90 · Correctness (precision) 85.1%</title></circle>
+        <circle cx="745.0" cy="143.8" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.95 · Correctness (precision) 89.1%</title></circle>
+        <circle cx="857.5" cy="92.7" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.98 · Correctness (precision) 94.0%</title></circle>
+        <circle cx="970.0" cy="100.0" r="5" fill="#A67C2E" stroke="#F0ECE3" stroke-width="2"><title>0.99 · Correctness (precision) 93.3%</title></circle>
+        <circle cx="86" cy="40" r="5" fill="#41599B"/><text x="98" y="44" font-family="IBM Plex Mono,monospace" font-size="14" fill="#5A6270">Completeness (recall)</text>
+        <circle cx="86" cy="64" r="5" fill="#A67C2E"/><text x="98" y="68" font-family="IBM Plex Mono,monospace" font-size="14" fill="#5A6270">Correctness (precision)</text>
+        <text x="70.0" y="179.9" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="400" fill="#1A2030">84.5%</text>
+        <text x="70.0" y="314.1" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="400" fill="#1A2030">75.1%</text>
+        <text x="745.0" y="389.3" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="400" fill="#1A2030">67.9%</text>
+        <text x="745.0" y="131.8" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="400" fill="#1A2030">89.1%</text>
+        <text x="857.5" y="385.6" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="700" fill="#1A2030">64.8%</text>
+        <text x="857.5" y="80.7" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="700" fill="#1A2030">94.0%</text>
+        <text x="966.0" y="456.7" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="400" fill="#1A2030">58.0%</text>
+        <text x="966.0" y="124.0" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="14" font-weight="400" fill="#1A2030">93.3%</text>
+        </svg>
+      </div>
+      <div style="justify-content:flex-start">
+        <table class="xs">
+        <thead><tr><th class="n" style="text-align:left">Threshold</th><th class="n">Completeness</th><th class="n">Wrong merges</th><th class="n">Correctness</th></tr></thead>
+        <tbody>
+          <tr><td class="k">0.50</td><td class="n">84.5%</td><td class="n">8.4%</td><td class="n">75.1%</td></tr>
+          <tr><td class="k">0.60</td><td class="n">74.1%</td><td class="n">7.8%</td><td class="n">74.1%</td></tr>
+          <tr><td class="k">0.70</td><td class="n">74.6%</td><td class="n">5.9%</td><td class="n">79.1%</td></tr>
+          <tr><td class="k">0.80</td><td class="n">73.1%</td><td class="n">5.9%</td><td class="n">78.8%</td></tr>
+          <tr><td class="k">0.85</td><td class="n">73.1%</td><td class="n">5.4%</td><td class="n">80.1%</td></tr>
+          <tr><td class="k">0.90</td><td class="n">67.9%</td><td class="n">3.6%</td><td class="n">85.1%</td></tr>
+          <tr><td class="k">0.95</td><td class="n">67.9%</td><td class="n">2.5%</td><td class="n">89.1%</td></tr>
+          <tr class="hi"><td class="k">0.98</td><td class="n">64.8%</td><td class="n">1.2%</td><td class="n">94.0%</td></tr>
+          <tr><td class="k">0.99</td><td class="n">58.0%</td><td class="n">1.2%</td><td class="n">93.3%</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span>Points are measured, equally spaced for readability · gate: wrong merges ≤ 2.5% of 645</span><span>15</span></div>
+</section>
+
+<!-- 17 Price & tokens -->
+<section class="slide light" data-label="Price &amp; tokens">
+  <div class="chrome"><span>12 · Price &amp; tokens · 1,472 → 3 million</span><span>16</span></div>
+  <div class="body">
+    <div class="reveal">
+      <p class="kicker">LLM extraction priced at gpt-4o-mini list ($0.15 in / $0.60 out per M)</p>
+      <div class="rule"></div>
+      <h2 class="dense">Cost</h2>
+    </div>
+    <div class="stats c3 reveal">
+      <div class="stat"><div class="v sm">211</div><div class="l">tokens per SKU for method 5</div><div class="n">measured: 311k embedding tokens / 1,472 listings</div></div>
+      <div class="stat"><div class="v sm">HK$0.05</div><div class="l">the whole bill for method 5 at 1,472 listings</div><div class="n">one-off; cached, re-runs HK$0</div></div>
+      <div class="stat"><div class="v sm">HK$99</div><div class="l">at 3 million listings, list price</div><div class="n">633M embedding tokens, method 5 without LLM extraction</div></div>
+    </div>
+    <table class="xs">
+      <thead><tr><th style="width:26%">Approach</th><th class="n">Tokens @ 1,472</th><th class="n">Cost @ 1,472</th><th class="n">Tokens @ 3M</th><th class="n">Cost @ 3M</th></tr></thead>
+      <tbody>
+        <tr><td class="plain">1 · Shared words only</td><td class="n">0</td><td class="n">HK$0</td><td class="n">0</td><td class="n">HK$0</td></tr>
+        <tr><td class="plain">2 · Local word-frequency vector</td><td class="n">0</td><td class="n">HK$0</td><td class="n">0</td><td class="n">HK$0</td></tr>
+        <tr><td class="plain">3 · OpenAI semantic vector</td><td class="n">311k</td><td class="n">HK$0.05</td><td class="n">633M</td><td class="n">HK$99</td></tr>
+        <tr><td class="plain">3 + LLM extraction</td><td class="n">1.70M</td><td class="n">HK$2.1</td><td class="n">3.47B</td><td class="n">HK$4,350</td></tr>
+        <tr><td class="plain">4 · Semantic vector + photo</td><td class="n">311k</td><td class="n">HK$0.05</td><td class="n">633M</td><td class="n">HK$99</td></tr>
+        <tr><td class="plain">4 + LLM extraction</td><td class="n">1.70M</td><td class="n">HK$2.1</td><td class="n">3.47B</td><td class="n">HK$4,350</td></tr>
+        <tr><td class="plain">5 · Semantic + word freq + photo</td><td class="n">311k</td><td class="n">HK$0.05</td><td class="n">633M</td><td class="n">HK$99</td></tr>
+        <tr class="hi"><td class="plain">5 + LLM extraction</td><td class="n">1.70M</td><td class="n">HK$2.1</td><td class="n">3.47B</td><td class="n">HK$4,350</td></tr>
+      </tbody>
+    </table>
+    <p class="caption reveal">Priced at gpt-4o-mini list as requested</p>
+  </div>
+  <div class="foot"><span></span><span>16</span></div>
+</section>
+
+<!-- 19 Conclusion -->
+<section class="slide light chromeless" data-label="Conclusion">
+  <div class="chap">
+    <p class="kicker reveal">Conclusion and next steps</p>
+    <div class="rule"></div>
+    <h2 class="reveal" style="max-width:1560px">Ship <em>Approach 5</em>;<br>absolute numbers still need human labels</h2>
+    <div class="cols c2 reveal" style="margin-top:34px">
+      <div>
+        <h3 style="margin-bottom:16px">What can be claimed today</h3>
+        <ul class="dash tight">
+          <li>Approach 5: 69.4% completeness, 89.3% precision, 2.48% wrong merges, perfect pack invariance, 7/7 adversarial</li>
+          <li>Approach 2 is the best offline option</li>
+          <li>Scaling API cost is negligible</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="margin-bottom:16px">Next Steps</h3>
+        <ul class="dash tight">
+          <li><strong>Label groups by hand</strong>, turn a proxy metric into a real correctness figure</li>
+          <li>Grow the training set: 494 pairs today, limited by requiring barcodes on both sides</li>
+          <li>Merge the two LLM stages to streamline the pipeline</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+</deck-stage>
+
+<script>
+/**
+ * <deck-stage> — reusable web component for HTML decks.
+ *
+ * Handles:
+ *  (a) speaker notes — reads <script type="application/json" id="speaker-notes">
+ *      and posts {slideIndexChanged: N} to the parent window on nav.
+ *  (b) keyboard navigation — ←/→, PgUp/PgDn, Space, Home/End, number keys.
+ *  (c) press R to reset to slide 0 (with a tasteful keyboard hint).
+ *  (d) bottom-center overlay showing slide count + hints, fades out on idle.
+ *  (e) auto-scaling — inner canvas is a fixed design size (default 1920×1080)
+ *      scaled with `transform: scale()` to fit the viewport, letterboxed.
+ *      Set the `noscale` attribute to render at authored size (1:1) — the
+ *      PPTX exporter sets this so its DOM capture sees unscaled geometry.
+ *  (f) print — `@media print` lays every slide out as its own page at the
+ *      design size, so the browser's Print → Save as PDF produces a clean
+ *      one-page-per-slide PDF with no extra setup.
+ *
+ * Slides are HIDDEN, not unmounted. Non-active slides stay in the DOM with
+ * `visibility: hidden` + `opacity: 0`, so their state (videos, iframes,
+ * form inputs, React trees) is preserved across navigation.
+ *
+ * Lifecycle event — the component dispatches a `slidechange` CustomEvent on
+ * itself whenever the active slide changes (including the initial mount).
+ * The event bubbles and composes out of shadow DOM, so you can listen on
+ * the <deck-stage> element or on document:
+ *
+ *   document.querySelector('deck-stage').addEventListener('slidechange', (e) => {
+ *     e.detail.index         // new 0-based index
+ *     e.detail.previousIndex // previous index, or -1 on init
+ *     e.detail.total         // total slide count
+ *     e.detail.slide         // the new active slide element
+ *     e.detail.previousSlide // the prior slide element, or null on init
+ *     e.detail.reason        // 'init' | 'keyboard' | 'click' | 'tap' | 'api'
+ *   });
+ *
+ * Persistence: none at the deck level. The host app keeps the current slide
+ * in its own URL (?slide=) and re-delivers it via location.hash on load, so a
+ * bare load with no hash always starts at slide 1.
+ *
+ * Usage:
+ *   <deck-stage width="1920" height="1080">
+ *     <section data-label="Title">...</section>
+ *     <section data-label="Agenda">...</section>
+ *   </deck-stage>
+ *
+ * Slides are the direct element children of <deck-stage>. Each slide is
+ * automatically tagged with:
+ *   - data-screen-label="NN Label"   (1-indexed, for comment flow)
+ *   - data-om-validate="no_overflowing_text,no_overlapping_text,slide_sized_text"
+ */
+
+(() => {
+  const DESIGN_W_DEFAULT = 1920;
+  const DESIGN_H_DEFAULT = 1080;
+  const OVERLAY_HIDE_MS = 1800;
+  const VALIDATE_ATTR = 'no_overflowing_text,no_overlapping_text,slide_sized_text';
+
+  const pad2 = (n) => String(n).padStart(2, '0');
+
+  const stylesheet = `
+    :host {
+      position: fixed;
+      inset: 0;
+      display: block;
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .canvas {
+      position: relative;
+      transform-origin: center center;
+      flex-shrink: 0;
+      background: #fff;
+      will-change: transform;
+    }
+
+    /* Slides live in light DOM (via <slot>) so authored CSS still applies.
+       We absolutely position each slotted child to stack them. */
+    ::slotted(*) {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      box-sizing: border-box !important;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+    }
+    ::slotted([data-deck-active]) {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* Tap zones for mobile — back/forward thirds like Stories.
+       Transparent, no visible UI, don't block the overlay. */
+    .tapzones {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      z-index: 2147482000;
+      pointer-events: none;
+    }
+    .tapzone {
+      flex: 1;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+    }
+    /* Only activate tap zones on coarse pointers (touch devices). */
+    @media (hover: hover) and (pointer: fine) {
+      .tapzones { display: none; }
+    }
+
+    .overlay {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 6px) scale(0.92);
+      filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px;
+      background: #000;
+      color: #fff;
+      border-radius: 999px;
+      font-size: 12px;
+      font-feature-settings: "tnum" 1;
+      letter-spacing: 0.01em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 260ms ease, transform 260ms cubic-bezier(.2,.8,.2,1), filter 260ms ease;
+      transform-origin: center bottom;
+      z-index: 2147483000;
+      user-select: none;
+    }
+    .overlay[data-visible] {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(-50%, 0) scale(1);
+      filter: blur(0);
+    }
+
+    .btn {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: 0;
+      margin: 0;
+      padding: 0;
+      color: inherit;
+      font: inherit;
+      cursor: default;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 28px;
+      min-width: 28px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.72);
+      transition: background 140ms ease, color 140ms ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .btn:active { background: rgba(255,255,255,0.18); }
+    .btn:focus { outline: none; }
+    .btn:focus-visible { outline: none; }
+    .btn::-moz-focus-inner { border: 0; }
+    .btn svg { width: 14px; height: 14px; display: block; }
+    .btn.reset {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0 10px 0 12px;
+      gap: 6px;
+      color: rgba(255,255,255,0.72);
+    }
+    .btn.reset .kbd {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 10px;
+      line-height: 1;
+      color: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.12);
+      border-radius: 4px;
+    }
+
+    .count {
+      font-variant-numeric: tabular-nums;
+      color: #fff;
+      font-weight: 500;
+      padding: 0 8px;
+      min-width: 42px;
+      text-align: center;
+      font-size: 12px;
+    }
+    .count .sep { color: rgba(255,255,255,0.45); margin: 0 3px; font-weight: 400; }
+    .count .total { color: rgba(255,255,255,0.55); }
+
+    .divider {
+      width: 1px;
+      height: 14px;
+      background: rgba(255,255,255,0.18);
+      margin: 0 2px;
+    }
+
+    /* ── Print: one page per slide, no chrome ────────────────────────────
+       The screen layout stacks every slide at inset:0 inside a scaled
+       canvas; for print we want them in document flow at the authored
+       design size so the browser paginates one slide per sheet. The
+       @page size is set from the width/height attributes via the inline
+       <style id="deck-stage-print-page"> that connectedCallback injects
+       into <head> (the @page at-rule has no effect inside shadow DOM). */
+    @media print {
+      :host {
+        position: static;
+        inset: auto;
+        background: none;
+        overflow: visible;
+        color: inherit;
+      }
+      .stage { position: static; display: block; }
+      .canvas {
+        transform: none !important;
+        width: auto !important;
+        height: auto !important;
+        background: none;
+        will-change: auto;
+      }
+      ::slotted(*) {
+        position: relative !important;
+        inset: auto !important;
+        width: var(--deck-design-w) !important;
+        height: var(--deck-design-h) !important;
+        box-sizing: border-box !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto;
+        break-after: page;
+        page-break-after: always;
+        break-inside: avoid;
+        overflow: hidden;
+      }
+      ::slotted(*:last-child) {
+        break-after: auto;
+        page-break-after: auto;
+      }
+      .overlay, .tapzones { display: none !important; }
+    }
+  `;
+
+  class DeckStage extends HTMLElement {
+    static get observedAttributes() { return ['width', 'height', 'noscale']; }
+
+    constructor() {
+      super();
+      this._root = this.attachShadow({ mode: 'open' });
+      this._index = 0;
+      this._slides = [];
+      this._notes = [];
+      this._hideTimer = null;
+      this._mouseIdleTimer = null;
+
+      this._onKey = this._onKey.bind(this);
+      this._onResize = this._onResize.bind(this);
+      this._onSlotChange = this._onSlotChange.bind(this);
+      this._onMouseMove = this._onMouseMove.bind(this);
+      this._onTapBack = this._onTapBack.bind(this);
+      this._onTapForward = this._onTapForward.bind(this);
+    }
+
+    get designWidth() {
+      return parseInt(this.getAttribute('width'), 10) || DESIGN_W_DEFAULT;
+    }
+    get designHeight() {
+      return parseInt(this.getAttribute('height'), 10) || DESIGN_H_DEFAULT;
+    }
+
+    connectedCallback() {
+      this._render();
+      this._loadNotes();
+      this._syncPrintPageRule();
+      window.addEventListener('keydown', this._onKey);
+      window.addEventListener('resize', this._onResize);
+      window.addEventListener('mousemove', this._onMouseMove, { passive: true });
+      // Initial collection + layout happens via slotchange, which fires on mount.
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener('keydown', this._onKey);
+      window.removeEventListener('resize', this._onResize);
+      window.removeEventListener('mousemove', this._onMouseMove);
+      if (this._hideTimer) clearTimeout(this._hideTimer);
+      if (this._mouseIdleTimer) clearTimeout(this._mouseIdleTimer);
+    }
+
+    attributeChangedCallback() {
+      if (this._canvas) {
+        this._canvas.style.width = this.designWidth + 'px';
+        this._canvas.style.height = this.designHeight + 'px';
+        this._canvas.style.setProperty('--deck-design-w', this.designWidth + 'px');
+        this._canvas.style.setProperty('--deck-design-h', this.designHeight + 'px');
+        this._fit();
+        this._syncPrintPageRule();
+      }
+    }
+
+    _render() {
+      const style = document.createElement('style');
+      style.textContent = stylesheet;
+
+      const stage = document.createElement('div');
+      stage.className = 'stage';
+
+      const canvas = document.createElement('div');
+      canvas.className = 'canvas';
+      canvas.style.width = this.designWidth + 'px';
+      canvas.style.height = this.designHeight + 'px';
+      canvas.style.setProperty('--deck-design-w', this.designWidth + 'px');
+      canvas.style.setProperty('--deck-design-h', this.designHeight + 'px');
+
+      const slot = document.createElement('slot');
+      slot.addEventListener('slotchange', this._onSlotChange);
+      canvas.appendChild(slot);
+      stage.appendChild(canvas);
+
+      // Tap zones (mobile): left third = back, right third = forward.
+      const tapzones = document.createElement('div');
+      tapzones.className = 'tapzones export-hidden';
+      tapzones.setAttribute('aria-hidden', 'true');
+      tapzones.setAttribute('data-noncommentable', '');
+      const tzBack = document.createElement('div');
+      tzBack.className = 'tapzone tapzone--back';
+      const tzMid = document.createElement('div');
+      tzMid.className = 'tapzone tapzone--mid';
+      tzMid.style.pointerEvents = 'none';
+      const tzFwd = document.createElement('div');
+      tzFwd.className = 'tapzone tapzone--fwd';
+      tzBack.addEventListener('click', this._onTapBack);
+      tzFwd.addEventListener('click', this._onTapForward);
+      tapzones.append(tzBack, tzMid, tzFwd);
+
+      // Overlay: compact, solid black, with clickable controls.
+      const overlay = document.createElement('div');
+      overlay.className = 'overlay export-hidden';
+      overlay.setAttribute('role', 'toolbar');
+      overlay.setAttribute('aria-label', 'Deck controls');
+      overlay.setAttribute('data-noncommentable', '');
+      overlay.innerHTML = `
+        <button class="btn prev" type="button" aria-label="Previous slide" title="Previous (←)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3L5 8l5 5"/></svg>
+        </button>
+        <span class="count" aria-live="polite"><span class="current">1</span><span class="sep">/</span><span class="total">1</span></span>
+        <button class="btn next" type="button" aria-label="Next slide" title="Next (→)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3l5 5-5 5"/></svg>
+        </button>
+        <span class="divider"></span>
+        <button class="btn reset" type="button" aria-label="Reset to first slide" title="Reset (R)">Reset<span class="kbd">R</span></button>
+      `;
+
+      overlay.querySelector('.prev').addEventListener('click', () => this._go(this._index - 1, 'click'));
+      overlay.querySelector('.next').addEventListener('click', () => this._go(this._index + 1, 'click'));
+      overlay.querySelector('.reset').addEventListener('click', () => this._go(0, 'click'));
+
+      this._root.append(style, stage, tapzones, overlay);
+      this._canvas = canvas;
+      this._slot = slot;
+      this._overlay = overlay;
+      this._countEl = overlay.querySelector('.current');
+      this._totalEl = overlay.querySelector('.total');
+    }
+
+    /** @page must live in the document stylesheet — it's a no-op inside
+     *  shadow DOM. Inject/update a single <head> style tag so the print
+     *  sheet matches the design size and Save-as-PDF yields one slide per
+     *  page with no margins. */
+    _syncPrintPageRule() {
+      const id = 'deck-stage-print-page';
+      let tag = document.getElementById(id);
+      if (!tag) {
+        tag = document.createElement('style');
+        tag.id = id;
+        document.head.appendChild(tag);
+      }
+      tag.textContent =
+        '@page { size: ' + this.designWidth + 'px ' + this.designHeight + 'px; margin: 0; } ' +
+        '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; overflow: visible !important; height: auto !important; } ' +
+        '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }';
+    }
+
+    _onSlotChange() {
+      this._collectSlides();
+      this._restoreIndex();
+      this._applyIndex({ showOverlay: false, broadcast: true, reason: 'init' });
+      this._fit();
+    }
+
+    _collectSlides() {
+      const assigned = this._slot.assignedElements({ flatten: true });
+      this._slides = assigned.filter((el) => {
+        // Skip template/style/script nodes even if someone slots them.
+        const tag = el.tagName;
+        return tag !== 'TEMPLATE' && tag !== 'SCRIPT' && tag !== 'STYLE';
+      });
+
+      this._slides.forEach((slide, i) => {
+        const n = i + 1;
+        // Determine a label for comment flow: prefer explicit data-label,
+        // then an existing data-screen-label, then first heading, else "Slide".
+        let label = slide.getAttribute('data-label');
+        if (!label) {
+          const existing = slide.getAttribute('data-screen-label');
+          if (existing) {
+            // Strip any leading number the author may have included.
+            label = existing.replace(/^\s*\d+\s*/, '').trim() || existing;
+          }
+        }
+        if (!label) {
+          const h = slide.querySelector('h1, h2, h3, [data-title]');
+          if (h) label = (h.textContent || '').trim().slice(0, 40);
+        }
+        if (!label) label = 'Slide';
+        slide.setAttribute('data-screen-label', `${pad2(n)} ${label}`);
+
+        // Validation attribute for comment flow / auto-checks.
+        if (!slide.hasAttribute('data-om-validate')) {
+          slide.setAttribute('data-om-validate', VALIDATE_ATTR);
+        }
+
+        slide.setAttribute('data-deck-slide', String(i));
+      });
+
+      if (this._totalEl) this._totalEl.textContent = String(this._slides.length || 1);
+      if (this._index >= this._slides.length) this._index = Math.max(0, this._slides.length - 1);
+    }
+
+    _loadNotes() {
+      const tag = document.getElementById('speaker-notes');
+      if (!tag) { this._notes = []; return; }
+      try {
+        const parsed = JSON.parse(tag.textContent || '[]');
+        if (Array.isArray(parsed)) this._notes = parsed;
+      } catch (e) {
+        console.warn('[deck-stage] Failed to parse #speaker-notes JSON:', e);
+        this._notes = [];
+      }
+    }
+
+    _restoreIndex() {
+      // The host's ?slide= param is delivered as a #<int> hash (1-indexed) on
+      // the iframe src. No hash → slide 1; the deck itself keeps no position
+      // state across loads.
+      const h = (location.hash || '').match(/^#(\d+)$/);
+      if (h) {
+        const n = parseInt(h[1], 10) - 1;
+        if (n >= 0 && n < this._slides.length) this._index = n;
+      }
+    }
+
+    _applyIndex({ showOverlay = true, broadcast = true, reason = 'init' } = {}) {
+      if (!this._slides.length) return;
+      const prev = this._prevIndex == null ? -1 : this._prevIndex;
+      const curr = this._index;
+      // Keep the iframe's own hash in sync so an in-iframe location.reload()
+      // (reload banner path in viewer-handle.ts) lands on the current slide,
+      // not the stale deep-link hash from initial load.
+      try { history.replaceState(null, '', '#' + (curr + 1)); } catch (e) {}
+      this._slides.forEach((s, i) => {
+        if (i === curr) s.setAttribute('data-deck-active', '');
+        else s.removeAttribute('data-deck-active');
+      });
+      if (this._countEl) this._countEl.textContent = String(curr + 1);
+
+      if (broadcast) {
+        // (1) Legacy: host-window postMessage for speaker-notes renderers.
+        try { window.postMessage({ slideIndexChanged: curr }, '*'); } catch (e) {}
+
+        // (2) In-page CustomEvent on the <deck-stage> element itself.
+        //     Bubbles and composes out of shadow DOM so slide code can listen:
+        //       document.querySelector('deck-stage').addEventListener('slidechange', e => {
+        //         e.detail.index, e.detail.previousIndex, e.detail.total, e.detail.slide, e.detail.reason
+        //       });
+        const detail = {
+          index: curr,
+          previousIndex: prev,
+          total: this._slides.length,
+          slide: this._slides[curr] || null,
+          previousSlide: prev >= 0 ? (this._slides[prev] || null) : null,
+          reason: reason, // 'init' | 'keyboard' | 'click' | 'tap' | 'api'
+        };
+        this.dispatchEvent(new CustomEvent('slidechange', {
+          detail,
+          bubbles: true,
+          composed: true,
+        }));
+      }
+
+      this._prevIndex = curr;
+      if (showOverlay) this._flashOverlay();
+    }
+
+    _flashOverlay() {
+      if (!this._overlay) return;
+      this._overlay.setAttribute('data-visible', '');
+      if (this._hideTimer) clearTimeout(this._hideTimer);
+      this._hideTimer = setTimeout(() => {
+        this._overlay.removeAttribute('data-visible');
+      }, OVERLAY_HIDE_MS);
+    }
+
+    _fit() {
+      if (!this._canvas) return;
+      // PPTX export sets noscale so the DOM capture sees authored-size
+      // geometry — the scaled canvas is in shadow DOM, so the exporter's
+      // resetTransformSelector can't reach .canvas.style.transform directly.
+      if (this.hasAttribute('noscale')) {
+        this._canvas.style.transform = 'none';
+        return;
+      }
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const s = Math.min(vw / this.designWidth, vh / this.designHeight);
+      this._canvas.style.transform = `scale(${s})`;
+    }
+
+    _onResize() { this._fit(); }
+
+    _onMouseMove() {
+      // Keep overlay visible while mouse moves; hide after idle.
+      this._flashOverlay();
+    }
+
+    _onTapBack(e) {
+      e.preventDefault();
+      this._go(this._index - 1, 'tap');
+    }
+
+    _onTapForward(e) {
+      e.preventDefault();
+      this._go(this._index + 1, 'tap');
+    }
+
+    _onKey(e) {
+      // Ignore when the user is typing.
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+      const key = e.key;
+      let handled = true;
+
+      if (key === 'ArrowRight' || key === 'PageDown' || key === ' ' || key === 'Spacebar') {
+        this._go(this._index + 1, 'keyboard');
+      } else if (key === 'ArrowLeft' || key === 'PageUp') {
+        this._go(this._index - 1, 'keyboard');
+      } else if (key === 'Home') {
+        this._go(0, 'keyboard');
+      } else if (key === 'End') {
+        this._go(this._slides.length - 1, 'keyboard');
+      } else if (key === 'r' || key === 'R') {
+        this._go(0, 'keyboard');
+      } else if (/^[0-9]$/.test(key)) {
+        // 1..9 jump to that slide; 0 jumps to 10.
+        const n = key === '0' ? 9 : parseInt(key, 10) - 1;
+        if (n < this._slides.length) this._go(n, 'keyboard');
+      } else {
+        handled = false;
+      }
+
+      if (handled) {
+        e.preventDefault();
+        this._flashOverlay();
+      }
+    }
+
+    _go(i, reason = 'api') {
+      if (!this._slides.length) return;
+      const clamped = Math.max(0, Math.min(this._slides.length - 1, i));
+      if (clamped === this._index) {
+        this._flashOverlay();
+        return;
+      }
+      this._index = clamped;
+      this._applyIndex({ showOverlay: true, broadcast: true, reason });
+    }
+
+    // Public API ------------------------------------------------------------
+
+    /** Current slide index (0-based). */
+    get index() { return this._index; }
+    /** Total slide count. */
+    get length() { return this._slides.length; }
+    /** Programmatically navigate. */
+    goTo(i) { this._go(i, 'api'); }
+    next() { this._go(this._index + 1, 'api'); }
+    prev() { this._go(this._index - 1, 'api'); }
+    reset() { this._go(0, 'api'); }
+  }
+
+  if (!customElements.get('deck-stage')) {
+    customElements.define('deck-stage', DeckStage);
+  }
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+==============================================================================
+product-photo signal probe
+==============================================================================
+  SKUs with descriptor  1466 / 1472   (download failed 3)
+  silver positive pairs  193  (both sides have images 193)
+  silver negative pairs  645  (both sides have images 645)
+
+⚠️ a negative pair means same brand, same unit size, same pack count, disjoint barcodes --
+   in practice, different scents of one product line that share a single package design.
+
+--- 1. marginal discriminative power of three continuous descriptors ---
+  descriptor                    AUC  pos mean  neg mean
+  mean-sub 32x32 grey         0.419     0.431     0.542
+  hue histogram 32 bins       0.601     0.645     0.527
+  dhash normalised sim        0.425     0.672     0.691
+
+  Conclusion: structural AUC is below 0.5 -- confusable pairs are structurally more
+  alike than genuine same-product pairs, so "similar image => same product" is wrong here.
+
+--- 2. dhash near-duplicates: precision by Hamming radius ---
+  radius       positive hits      negative FPs  prec ratio
+  <=0            25 ( 13.0%)        0 (  0.0%)    no FPs
+  <=2            33 ( 17.1%)        2 (  0.3%)     55.1x
+  <=4            34 ( 17.6%)       13 (  2.0%)      8.7x
+  <=6            35 ( 18.1%)       25 (  3.9%)      4.7x
+  <=8            35 ( 18.1%)       55 (  8.5%)      2.1x
+
+  We use radius 2: versus radius 0, +4pp recall for 2/645 FPs; the ratio collapses from radius 4 on.
+
+--- 3. component ablation of method 4 (honest track, threshold 0.98) ---
+  image near-duplicate pairs: 272 (before the hard-attribute check)
+
+  config                             cand rec  silv rec  mismerge precision
+  method 3 baseline (no images)         98.4%     57.5%      2.5%     87.4%
+  + image recall channel only           98.4%     57.5%      2.5%     87.4%
+  + image features only                 98.4%     59.6%      1.2%     93.5%
+  + both (method 4)                     98.4%     59.6%      1.2%     93.5%
+
+  How to read: the recall channel alone does not move candidate recall -- every new pair it
+  finds is dropped by broad_compatible. The whole gain is the three image features in scoring.

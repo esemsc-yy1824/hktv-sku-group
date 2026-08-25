@@ -1,0 +1,38 @@
+silver-standard positive pairs N=193
+
+blocking scheme            blocks    max cand pairs  recall (ceil)
+----------------------------------------------------------------------
+A brand                       259    134      25308          95.9%
+B brand × size                421     88      11764          94.3%
+C brand × size × origin       478     88      10544          76.2%
+D size × origin (no brand)    267    103      23010          79.3%
+E size only                    91    523     171347          98.4%
+F GS1 prefix/brand            314    113      20067          97.4%
+G GS1 prefix/brand × size     474     88       9523          95.9%
+
+=== silver pairs missed by scheme C (why they were missed) ===
+  missed 46/193 pairs, main causes: {'origin mismatch': 35, 'unit size parse mismatch': 3, 'brand mismatch': 8}
+
+  A: [蛇牌|None|(100.0, 'g')] Snake brand - 薰衣草舒緩涼感香皂 100g (平行進口)
+  B: [蛇牌|泰國|(100.0, 'g')] 薰衣草味涼感抗菌香皂 100g | 8852086002797 | 平行進口商品
+
+  A: [PELICAN|日本|(80.0, 'g')] - 去黑色素去角質美臀pp 涼感蜜桃香皂 80g (平行進口)
+  B: [PELICAN|None|(80.0, 'g')] 去角質淡化黑色素保濕蜜桃皂 80g #涼感 [平行進口]
+
+  A: [PELICAN|日本/韓國/台灣/紐西蘭/中國|(80.0, 'g')] 臀部護理肥皂 (桃之香) 80g[4976631478272]  (平行進口)
+  B: [PELICAN|日本|(80.0, 'g')] 去黑色素去角質美臀pp蜜桃香皂 80g (平行進口)
+
+  A: [PELICAN|日本|(80.0, 'g')] PELICAN 去黑色素去角質美臀pp蜜桃香皂 80g 平行進口 新舊版本隨機發貨
+  B: [PELICAN|None|(80.0, 'g')] 去角質淡化黑色素保濕蜜桃皂 80g [平行進口]
+
+  A: [蛇牌|None|(100.0, 'g')] Snake brand - 經典清新涼感皂 100g (平行進口)
+  B: [蛇牌|泰國|(100.0, 'g')] 泰國Snake Brand蛇牌香皂玫瑰100g(平行進口)8852086002780
+
+  A: [PELICAN|日本|(80.0, 'g')] Pelican - 蒟蒻臀部PP 去角質保濕蜜桃皂 80g (全身可用淡化黑色素) [平行進口][Par
+  B: [PELICAN|None|(80.0, 'g')] 去角質淡化黑色素保濕蜜桃皂 80g [平行進口]
+
+  A: [加信氏|印尼|(None, None)] 加信氏 香皂 4PCS（6297000323060）
+  B: [加信氏|中國|(110.0, 'g')] - 加信氏 皇室香皂110g 4個裝新舊包裝隨機發貨
+
+  A: [PELICAN|日本|(135.0, 'g')] PELICAN 背部祛痘去粉刺專用 石鹼潔膚皂 135g 平行進口 新舊版本隨機發貨
+  B: [Pelican For Back|日本|(135.0, 'g')] 背部粉刺痘痘祛痘香皂  135g (4976631894225)(平行進口)

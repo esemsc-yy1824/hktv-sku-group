@@ -1,0 +1,59 @@
+================================================================================================
+ablation: product_form on/off × exact vs ANN   (method 5, threshold 0.98, honest track)
+================================================================================================
+
+config                          cand rec  complete  mismerge precision  pack inv adv prod
+current config (form + exact)      98.4%     61.7%     1.24%     93.7%    100.0%      7/7
+no form + exact                    98.4%     57.5%     1.24%     93.3%    100.0%      7/7
+form + ANN                         98.4%     61.7%     1.24%     93.7%    100.0%      7/7
+no form + ANN                      98.4%     57.5%     1.24%     93.3%    100.0%      7/7
+
+config                         cand pairs grps(honest)   grps(prod) retrieval
+current config (form + exact)       12943         1099         1091     0.03s
+no form + exact                     13365         1105         1094     0.03s
+form + ANN                          13002         1100         1092     0.10s
+no form + ANN                       13425         1106         1095     0.10s
+
+--- ANN fidelity and compute ---
+  form + ANN                   recall against exact top-20: 92.4%
+    38 buckets, 8 probed per query: 474 rows compared on average, exact needs 1471 (67.8% saved)
+  no form + ANN                recall against exact top-20: 92.4%
+    38 buckets, 8 probed per query: 474 rows compared on average, exact needs 1471 (67.8% saved)
+
+--- extrapolated to 3 million rows (the actual reason to switch to ANN) ---
+  n=     1472 : exact compares         1471 rows/query   ANN about      309 rows   saves 78.93%
+  n=   100000 : exact compares        99999 rows/query   ANN about     2531 rows   saves 97.47%
+  n=  3000000 : exact compares      2999999 rows/query   ANN about    13856 rows   saves 99.54%
+
+  gate: wrong merges <= 2.5%, pack invariance >= 98%, adversarial regression 7/7
+
+================================================================================================
+Addendum: production --no-form, measured (form = UNKNOWN everywhere, embedding text included)
+================================================================================================
+One-off cost: 3 embedding requests for the new fingerprints / 309,144 tokens (about $0.006), then cached.
+
+method                    complete        mismerge   precision    pack inv  advers.   gate
+                    default  ->  --no-form
+method_1_lexical      54.9%  ->  63.2%   2.5%->2.5%  86.9->88.4  98.8->98.8   7/7     pass
+method_2_local_tfidf  54.9%  ->  57.0%   2.2%->2.3%  88.3->88.0   100->100    7/7     pass
+method_3_semantic     57.5%  ->  62.7%   2.5%->2.5%  87.4->88.3  98.8->100    4/7     fail
+method_4_semantic_img 62.7%  ->  65.8%   2.3%->1.6%  89.0->92.7  98.8->100    7/7     pass
+method_5_hybrid       61.7%  ->  55.4%   1.2%->1.2%  93.7->93.0   100->100    7/7     pass
+
+How to read (mind the difference from the probe cell above):
+  · In the probe, "no form" only strips the decision signal and keeps the form line in the
+    embedding text, measuring method five at 57.5%.
+    The real switch wipes form out of the embedding text too; method five then measures 55.4%.
+    Conclusion: that probe cell cannot stand in for --no-form -- the two differ by 2.1pp.
+  · Four of the five methods actually gain completeness with form off. form is a hard veto: 45
+    rows whose form is judged UNKNOWN, plus the misjudgements caused by SEO keyword stuffing,
+    keep genuinely identical products apart; drop it and those pairs merge.
+  · ⚠️ But method_3_semantic's adversarial regression drops from 7/7 to 4/7, which by itself
+    jams the release gate. What form was holding back is exactly those 3 hand-verified real errors.
+  · Only method_5_hybrid gets worse with form off (-6.3pp). It late-fuses three signal channels,
+    and there form's hard constraint is a net gain.
+
+What this actually means for "scaling to the few hundred categories of the whole site":
+  form being unmaintainable ≠ dropping it is harmless. Dropping it lifts completeness on average,
+  but it opens up the defence line on the adversarial cases. The right path is still to replace the
+  hand-written dictionary with a learned classifier, not to simply switch it off.

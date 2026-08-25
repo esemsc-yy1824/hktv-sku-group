@@ -1,0 +1,11 @@
+{
+  "raw_path": "/Users/alitayang/Documents/Temp/HKTV/data/raw/soap_sku_data.xlsx",
+  "raw_sha256": "4b83d98d5f342fb7000e5adbdcdd9effd1870e72adb1b5d67e73d943b5b9f2e4",
+  "processed_path": "/Users/alitayang/Documents/Temp/HKTV/data/processed/soap_sku_data_preprocessed.xlsx",
+  "processed_sha256": "373e0ce20215d71dcabbbc621467b5ca305632be55a597e0bc9b587bc775b755",
+  "n_rows": 1472,
+  "n_silver_positive_pairs": 193,
+  "n_silver_negative_pairs": 645,
+  "n_pack_invariance_pairs": 85,
+  "note": "Silver labels are diagnostics, not human-labelled ground truth."
+}
